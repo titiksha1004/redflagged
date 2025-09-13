@@ -49,7 +49,7 @@ export async function sendMessageToClaude(
                  Always maintain professional tone and cite relevant legal precedents when applicable.`;
 
     const response = await anthropic.messages.create({
-      model: "claude-3-sonnet-20240229",
+      model: "claude-4-20250101",
       max_tokens: options.maxTokens || 1024,
       temperature: options.temperature || 0.7,
       system: systemMessage,
