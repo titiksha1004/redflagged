@@ -14,6 +14,7 @@ export default defineConfig(({ mode }) => {
     },
     optimizeDeps: {
       exclude: ["lucide-react"],
+      include: ["@anthropic-ai/sdk"],
     },
     server: {
       proxy: {
