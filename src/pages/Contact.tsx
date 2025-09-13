@@ -111,23 +111,27 @@ export default function Contact() {
 
               <div className="border-t pt-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                  Andile Mbele
+                  REDFLAGGED Maintainer
+                </h3>
+                <div className="space-y-3">
+                  <div className="flex items-center">
+                    <Mail className="h-6 w-6 text-indigo-600 mr-3" />
+                    <span className="text-gray-600">
+                      privacy@redflagged-hackmit.vercel.app
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="border-t pt-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                  REDFLAGGED Maintainer
                 </h3>
                 <div className="space-y-3">
                   <div className="flex items-center">
                     <Mail className="h-6 w-6 text-indigo-600 mr-3" />
                     <span className="text-gray-600">
                       support@redflagged-hackmit.vercel.app
-                    </span>
-                  </div>
-                  <div className="flex items-center">
-                    <Phone className="h-6 w-6 text-indigo-600 mr-3" />
-                    <span className="text-gray-600">+263 77 861 3888</span>
-                  </div>
-                  <div className="flex items-center">
-                    <MapPin className="h-6 w-6 text-indigo-600 mr-3" />
-                    <span className="text-gray-600">
-                      Three Anchor House, Jason Moyo Ave, Harare
                     </span>
                   </div>
                 </div>

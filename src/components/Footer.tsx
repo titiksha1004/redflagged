@@ -12,9 +12,11 @@ export default function Footer() {
               <Shield className="h-7 w-7 sm:h-8 sm:w-8 text-indigo-400" />
               <span className="ml-2 text-lg sm:text-xl font-bold">FinePrint</span>
             </div>
-            <p className="text-gray-400 text-sm sm:text-base">
-              Protecting your rights with AI-powered contract analysis.
-            </p>
+            <div>
+              <p className="text-gray-400 text-sm sm:text-base">
+                Protecting your rights with AI-powered contract analysis.
+              </p>
+            </div>
             <div className="flex space-x-4 sm:space-x-6">
               <a 
                 href="https://redflagged-hackmit.vercel.app" 
@@ -121,18 +123,24 @@ export default function Footer() {
               </div>
               
               <div className="border-t border-gray-800 pt-4">
-                <h4 className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">Andile Mbele</h4>
+                <h4 className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">REDFLAGGED Maintainer</h4>
+                <ul className="space-y-2">
+                  <li>
+                    <a href="mailto:privacy@redflagged-hackmit.vercel.app" className="text-gray-300 hover:text-indigo-400 transition-colors flex items-center text-sm">
+                      <Mail className="h-4 w-4 mr-2" />
+                      <span className="break-all">privacy@redflagged-hackmit.vercel.app</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              
+              <div className="border-t border-gray-800 pt-4">
+                <h4 className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">REDFLAGGED Maintainer</h4>
                 <ul className="space-y-2">
                   <li>
                     <a href="mailto:support@redflagged-hackmit.vercel.app" className="text-gray-300 hover:text-indigo-400 transition-colors flex items-center text-sm">
                       <Mail className="h-4 w-4 mr-2" />
                       <span className="break-all">support@redflagged-hackmit.vercel.app</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="tel:+263778613888" className="text-gray-300 hover:text-indigo-400 transition-colors flex items-center text-sm">
-                      <Phone className="h-4 w-4 mr-2" />
-                      +263 77 861 3888
                     </a>
                   </li>
                 </ul>
