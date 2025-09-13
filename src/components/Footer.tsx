@@ -12,9 +12,11 @@ export default function Footer() {
               <Shield className="h-7 w-7 sm:h-8 sm:w-8 text-indigo-400" />
               <span className="ml-2 text-lg sm:text-xl font-bold">FinePrint</span>
             </div>
-            <p className="text-gray-400 text-sm sm:text-base">
-              Protecting your rights with AI-powered contract analysis.
-            </p>
+            <div>
+              <p className="text-gray-400 text-sm sm:text-base">
+                Protecting your rights with AI-powered contract analysis.
+              </p>
+            </div>
             <div className="flex space-x-4 sm:space-x-6">
               <a 
                 href="https://x.com/thabhelo_tabs" 
@@ -121,18 +123,24 @@ export default function Footer() {
               </div>
               
               <div className="border-t border-gray-800 pt-4">
-                <h4 className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">Andile Mbele</h4>
+                <h4 className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">Titiksha Golla</h4>
                 <ul className="space-y-2">
                   <li>
-                    <a href="mailto:andilembele020@gmail.com" className="text-gray-300 hover:text-indigo-400 transition-colors flex items-center text-sm">
+                    <a href="mailto:titiksha.golla@gmail.com" className="text-gray-300 hover:text-indigo-400 transition-colors flex items-center text-sm">
                       <Mail className="h-4 w-4 mr-2" />
-                      <span className="break-all">andilembele020@gmail.com</span>
+                      <span className="break-all">titiksha.golla@gmail.com</span>
                     </a>
                   </li>
+                </ul>
+              </div>
+              
+              <div className="border-t border-gray-800 pt-4">
+                <h4 className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">Zheng Chen</h4>
+                <ul className="space-y-2">
                   <li>
-                    <a href="tel:+263778613888" className="text-gray-300 hover:text-indigo-400 transition-colors flex items-center text-sm">
-                      <Phone className="h-4 w-4 mr-2" />
-                      +263 77 861 3888
+                    <a href="mailto:zhenghchen2024@gmail.com" className="text-gray-300 hover:text-indigo-400 transition-colors flex items-center text-sm">
+                      <Mail className="h-4 w-4 mr-2" />
+                      <span className="break-all">zhenghchen2024@gmail.com</span>
                     </a>
                   </li>
                 </ul>
