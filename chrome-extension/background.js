@@ -2,7 +2,7 @@
 importScripts('config.js');
 
 // Service worker config
-const API_BASE_URL = 'https://api.fineprint.it.com';
+const API_BASE_URL = 'https://api.redflagged.vercel.app';
 const API_FALLBACK_URL = 'http://localhost:8000'; // Only for development
 const ALLOW_HTTP_LOCALHOST = false; // Set to true only for local development
 
@@ -76,7 +76,7 @@ async function analyzeContract(text) {
 
 // Listen for installation
 chrome.runtime.onInstalled.addListener(() => {
-  console.log('FinePrint extension installed');
+  console.log('redflagged extension installed');
   
   // Log security config
   console.log('API Configuration:', {

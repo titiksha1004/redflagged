@@ -12,7 +12,7 @@ export default function About() {
           className="text-center"
         >
           <h1 className="text-4xl font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
-            About FinePrint
+            About REDFLAGGED
           </h1>
           <p className="mt-4 text-xl text-gray-600">
             Protecting consumer rights through AI-powered contract analysis
@@ -28,7 +28,7 @@ export default function About() {
           >
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Our Mission</h2>
             <p className="text-gray-600">
-              At FinePrint, we believe everyone deserves to understand the contracts they sign. 
+              At REDFLAGGED, we believe everyone deserves to understand the contracts they sign. 
               Our mission is to make legal documents accessible and transparent through innovative AI technology.
             </p>
           </motion.div>

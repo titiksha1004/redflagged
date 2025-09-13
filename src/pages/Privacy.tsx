@@ -80,7 +80,7 @@ export default function Privacy() {
           </p>
           <div className="mt-6 text-gray-600 max-w-3xl mx-auto">
             <p>
-              At FinePrint, we are committed to protecting your privacy and ensuring the security of your personal information. 
+              At REDFLAGGED, we are committed to protecting your privacy and ensuring the security of your personal information. 
               This Privacy Policy explains how we collect, use, and safeguard your data when you use our website and services.
             </p>
             <p className="mt-4">
@@ -169,12 +169,12 @@ export default function Privacy() {
           </p>
           <div className="mt-4">
             <p className="font-medium text-gray-900">Privacy Team</p>
-            <p className="text-gray-600">FinePrint, Inc.</p>
+            <p className="text-gray-600">REDFLAGGED, Inc.</p>
             <a
               href="mailto:support@redflagged-hackmit.vercel.app"
               className="text-indigo-600 hover:text-indigo-500"
             >
-              privacy@fineprint.it.com | support@redflagged-hackmit.vercel.app
+              privacy@redflagged.vercel.app | support@redflagged-hackmit.vercel.app
             </a>
           </div>
         </motion.div>

@@ -17,11 +17,11 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentAnalysis = null;
 
   // Config
-  const API_ENDPOINT = window.FineprintConfig?.getApiUrl() || 'https://api.fineprint.it.com';
-  const GROQ_API_URL = window.FineprintConfig?.CONFIG?.GROQ_API_URL || 'https://api.groq.com/openai/v1/chat/completions';
+  const API_ENDPOINT = window.redflaggedConfig?.getApiUrl() || 'https://api.redflagged.vercel.app';
+  const GROQ_API_URL = window.redflaggedConfig?.CONFIG?.GROQ_API_URL || 'https://api.groq.com/openai/v1/chat/completions';
 
   // Validate API endpoint security
-  if (!window.FineprintConfig?.isSecureUrl(API_ENDPOINT)) {
+  if (!window.redflaggedConfig?.isSecureUrl(API_ENDPOINT)) {
     console.error('Insecure API endpoint detected:', API_ENDPOINT);
   }
   
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       // Validate endpoint security
       const healthUrl = `${API_ENDPOINT}/health`;
-      if (!window.FineprintConfig?.isSecureUrl(healthUrl)) {
+      if (!window.redflaggedConfig?.isSecureUrl(healthUrl)) {
         throw new Error('Insecure health endpoint');
       }
       
@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Create a blob with the summary content
       const summaryText = summaryContent.innerText;
       const blob = new Blob([
-        'FinePrint Contract Analysis\n\n',
+        'redflagged Contract Analysis\n\n',
         `Risk Level: ${currentAnalysis.risk_level}\n`,
         `Red Flags Found: ${currentAnalysis.red_flags.length}\n\n`,
         'Summary:\n',
@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (websiteLinkButton) {
     websiteLinkButton.addEventListener('click', () => {
         // Replace with your actual website URL
-        chrome.tabs.create({ url: 'https://fineprint.it.com/' }); 
+        chrome.tabs.create({ url: 'https://redflagged.vercel.app/' }); 
     });
   }
 
@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
           console.log('Sending request to backend API...');
           // Validate endpoint security
           const analyzeUrl = `${API_ENDPOINT}/api/analyze`;
-          if (!window.FineprintConfig?.isSecureUrl(analyzeUrl)) {
+          if (!window.redflaggedConfig?.isSecureUrl(analyzeUrl)) {
             throw new Error('Insecure analyze endpoint');
           }
           
@@ -271,7 +271,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to clear existing highlights
     const clearHighlights = () => {
-      const existingHighlights = document.querySelectorAll('.fineprint-highlight');
+      const existingHighlights = document.querySelectorAll('.redflagged-highlight');
       existingHighlights.forEach(el => {
         const parent = el.parentNode;
         if (parent) {
@@ -347,9 +347,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Helper function to apply the highlight span
     function applyHighlight(element, severity) {
-        const severityClass = `fineprint-${severity}`;
+        const severityClass = `redflagged-${severity}`;
         const span = document.createElement('span');
-        span.className = `fineprint-highlight ${severityClass}`;
+        span.className = `redflagged-highlight ${severityClass}`;
         span.title = `Demo Highlight (${severity})`;
 
         if (element && element.childNodes.length > 0) {
@@ -455,14 +455,14 @@ document.addEventListener('DOMContentLoaded', () => {
     
     try {
       // Validate Groq API URL security
-      if (!window.FineprintConfig?.isSecureUrl(GROQ_API_URL)) {
+      if (!window.redflaggedConfig?.isSecureUrl(GROQ_API_URL)) {
         throw new Error('Insecure Groq API endpoint');
       }
       
       const response = await fetch(GROQ_API_URL, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${window.FineprintConfig?.CONFIG?.GROQ_API_KEY || ''}`,
+          'Authorization': `Bearer ${window.redflaggedConfig?.CONFIG?.GROQ_API_KEY || ''}`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
@@ -532,7 +532,7 @@ function extractContractText() {
 
 function highlightRedFlags(redFlags) {
   // Remove existing highlights
-  const existingHighlights = document.querySelectorAll('.fineprint-highlight');
+  const existingHighlights = document.querySelectorAll('.redflagged-highlight');
   existingHighlights.forEach(el => {
     const parent = el.parentNode;
     parent.replaceChild(document.createTextNode(el.textContent), el);
@@ -551,12 +551,12 @@ function highlightRedFlags(redFlags) {
 
     let node;
     while (node = walker.nextNode()) {
-      if (node.parentElement.classList.contains('fineprint-highlight')) continue;
+      if (node.parentElement.classList.contains('redflagged-highlight')) continue;
       
       const matches = node.textContent.match(regex);
       if (matches) {
         const span = document.createElement('span');
-        span.className = `fineprint-highlight fineprint-${flag.severity}`;
+        span.className = `redflagged-highlight redflagged-${flag.severity}`;
         span.textContent = node.textContent;
         span.title = `${flag.title}\n${flag.description}`;
         node.parentNode.replaceChild(span, node);

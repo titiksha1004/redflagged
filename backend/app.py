@@ -23,7 +23,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 app = FastAPI(
-    title="Fineprint API",
+    title="REDFLAGGED API",
     description="API for analyzing contracts and detecting red flags",
     version="1.0.0"
 )
@@ -41,9 +41,9 @@ ALLOWED_ORIGINS = [
     "chrome-extension://*",  # Chrome extensions
     "http://localhost:3000",    # Local development
     "http://localhost:5173",    # Vite dev server
-    "https://fineprint.vercel.app",  # Vercel production deployment
-    "https://fineprint.it.com",  # Custom domain (if configured)
-    "https://www.fineprint.it.com"  # Custom domain with www
+    "https://redflagged.vercel.app",  # Vercel production deployment
+    "https://redflagged.vercel.app",  # Custom domain (if configured)
+    "https://www.redflagged.vercel.app"  # Custom domain with www
 ]
 
 app.add_middleware(

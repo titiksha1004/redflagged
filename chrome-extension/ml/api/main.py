@@ -7,7 +7,7 @@ from ..models.contract_analyzer import ContractAnalyzer
 import time
 from functools import lru_cache
 
-app = FastAPI(title="FinePrint Contract Analyzer API")
+app = FastAPI(title="redflagged Contract Analyzer API")
 
 # Initialize model and config
 config = ModelConfig()

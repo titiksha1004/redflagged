@@ -11,7 +11,7 @@ const features = [
   },
   {
     name: 'Website Certificate Legitimacy',
-    description: "FinePrint verifies that a website's certificate is valid and the domain is secure before you interact with its contracts.",
+    description: "REDFLAGGED verifies that a website's certificate is valid and the domain is secure before you interact with its contracts.",
     icon: Globe,
     color: 'from-blue-500 to-indigo-600',
   },

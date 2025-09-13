@@ -41,7 +41,7 @@ export default function Blog() {
         >
           <h1 className="text-4xl font-extrabold text-gray-900">Latest Updates</h1>
           <p className="mt-4 text-xl text-gray-600">
-            Insights and news from the FinePrint team
+            Insights and news from the REDFLAGGED team
           </p>
         </motion.div>
 
