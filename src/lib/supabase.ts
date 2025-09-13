@@ -1,7 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 import type { Database, Json } from "../types/supabase";
 import { sendAnalysisEmail } from "./email";
-import type { GroqMessage } from "./groq";
+import type { ClaudeMessage } from "./claude-main";
 
 // Add missing types
 export interface GroqCompatible {
@@ -111,7 +111,7 @@ export type ConversationHistory =
 export type UserProfile = Database["public"]["Tables"]["user_profiles"]["Row"];
 
 /** 🔹 Save a conversation */
-export async function saveConversation(title: string, messages: GroqMessage[]) {
+export async function saveConversation(title: string, messages: ClaudeMessage[]) {
   const user = await supabase.auth.getUser();
   if (!user.data.user) {
     throw new Error("Not authenticated");

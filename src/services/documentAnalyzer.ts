@@ -1,12 +1,12 @@
-// Import Groq API for document analysis
+// Import Claude API for document analysis
 import type { Document } from "../pages/DocumentLibrary";
 
-class MockGroqAI {
+class MockClaudeAI {
   async createCompletion() {
     return {
       choices: [{
         message: {
-          content: "This is a fallback analysis when Groq API is not available.",
+          content: "This is a fallback analysis when Claude API is not available.",
           tool_calls: null
         }
       }]
@@ -42,34 +42,31 @@ export interface ExtractedTerm {
   riskFactors: string[];
 }
 
-// Use Groq API for analysis
-const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
-const GROQ_API_KEY = import.meta.env.VITE_GROQ_API_KEY || '';
+// Use Claude API for analysis
+import Anthropic from '@anthropic-ai/sdk';
 
-async function callGroqAPI(messages: any[]) {
+const anthropic = new Anthropic({
+  apiKey: import.meta.env.VITE_ANTHROPIC_API_KEY,
+  dangerouslyAllowBrowser: true,
+});
+
+async function callClaudeAPI(messages: any[]) {
   try {
-    const response = await fetch(GROQ_API_URL, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${GROQ_API_KEY}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        model: 'llama3-8b-8192',
-        messages: messages,
-        max_tokens: 1000,
-        temperature: 0.1
-      })
+    // Convert messages format for Claude
+    const systemMessage = messages.find(m => m.role === 'system')?.content || '';
+    const userMessages = messages.filter(m => m.role !== 'system');
+
+    const response = await anthropic.messages.create({
+      model: 'claude-3-sonnet-20240229',
+      max_tokens: 1000,
+      temperature: 0.1,
+      system: systemMessage,
+      messages: userMessages
     });
 
-    if (!response.ok) {
-      throw new Error(`Groq API error: ${response.status}`);
-    }
-
-    const data = await response.json();
-    return data.choices[0]?.message?.content || '';
+    return response.content[0]?.type === 'text' ? response.content[0].text : '';
   } catch (error) {
-    console.error('Groq API error:', error);
+    console.error('Claude API error:', error);
     throw error;
   }
 }
@@ -101,7 +98,7 @@ ${document.content.substring(0, 8000)}`;
       }
     ];
 
-    const response = await callGroqAPI(messages);
+    const response = await callClaudeAPI(messages);
     
     // Try to parse JSON response, fallback to basic analysis if needed
     try {
@@ -121,7 +118,7 @@ ${document.content.substring(0, 8000)}`;
     }
 
   } catch (error) {
-    console.error('Error analyzing document with Groq:', error);
+    console.error('Error analyzing document with Claude:', error);
     return generateFallbackAnalysis(document.content);
   }
 }

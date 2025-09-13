@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Send, Bot, User, ExternalLink, Book, Scale, Gavel, Search } from 'lucide-react';
-import { sendMessageToGroq } from '../lib/groq';
+import { sendMessageToClaude } from '../lib/claude-main';
 import { toast } from 'sonner';
 import { Resizable } from 're-resizable';
 
@@ -46,10 +46,15 @@ export default function LegalResearch() {
     setIsTyping(true);
     
     try {
-      // Convert messages to Groq format (excluding timestamps and ids)
-      const conversationHistory = messages.map(({ role, content }) => ({ role, content }));
-      
-      const response = await sendMessageToGroq(input, conversationHistory, {
+      // Convert messages to Claude format (excluding timestamps and ids, system role)
+      const conversationHistory = messages
+        .filter(m => m.role !== 'system')
+        .map(({ role, content }) => ({
+          role: role as 'user' | 'assistant',
+          content
+        }));
+
+      const response = await sendMessageToClaude(input, conversationHistory, {
         temperature: 0.7,
         maxTokens: 2048
       });
@@ -180,7 +185,7 @@ export default function LegalResearch() {
                       type="text"
                       value={input}
                       onChange={(e) => setInput(e.target.value)}
-                      onKeyPress={(e) => e.key === 'Enter' && handleSend()}
+                      onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                       placeholder="Ask your legal question..."
                       className="flex-1 rounded-lg border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm"
                     />
