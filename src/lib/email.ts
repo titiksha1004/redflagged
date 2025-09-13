@@ -25,7 +25,7 @@ export async function sendContactEmail(data: ContactEmailProps) {
         from_name: data.name,
         to_name: "Thabhelo",
         from_email: data.email,
-        to_email: "thabhelo.duve+fineprint@gmail.com",
+        to_email: "thabhelo.duve+redflagged@gmail.com",
         message: data.message,
       },
       '_JDd2_-oFPAXuoAI5'
@@ -48,9 +48,9 @@ export async function sendAnalysisEmail(to: string, props: AnalysisEmailProps) {
       'service_ile56zc',
       'template_8y2z9dp',
       {
-        from_name: "FinePrint Analysis",
+        from_name: "REDFLAGGED Analysis",
         to_name: props.userName,
-        from_email: "analysis@fineprint.ai",
+        from_email: "analysis@redflagged.ai",
         to_email: to,
         message: `Contract Analysis Results for "${props.contractTitle}"\n\nRisk Level: ${props.riskLevel}\n\nIssues Found: ${props.issuesCount}`,
       },

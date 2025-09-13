@@ -10,7 +10,7 @@ export default function Footer() {
           <div className="space-y-6 sm:space-y-8">
             <div className="flex items-center">
               <Shield className="h-7 w-7 sm:h-8 sm:w-8 text-indigo-400" />
-              <span className="ml-2 text-lg sm:text-xl font-bold">FinePrint</span>
+              <span className="ml-2 text-lg sm:text-xl font-bold">REDFLAGGED</span>
             </div>
             <div>
               <p className="text-gray-400 text-sm sm:text-base">
@@ -151,7 +151,7 @@ export default function Footer() {
         
         <div className="mt-8 pt-6 sm:mt-12 sm:pt-8 border-t border-gray-800">
           <p className="text-sm sm:text-base text-gray-400 text-center">
-            © {new Date().getFullYear()} FinePrint. All rights reserved.
+            © {new Date().getFullYear()} REDFLAGGED. All rights reserved.
           </p>
         </div>
       </div>

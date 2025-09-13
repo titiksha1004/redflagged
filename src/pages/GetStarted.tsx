@@ -16,11 +16,11 @@ export default function GetStarted() {
           <h1 className="text-4xl font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
             Start Your Legal Journey
             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 mt-2">
-              With FinePrint
+              With REDFLAGGED
             </span>
           </h1>
           <p className="mt-6 max-w-2xl mx-auto text-xl text-gray-500">
-            Join thousands of users who trust FinePrint to protect their legal rights and make informed decisions.
+            Join thousands of users who trust REDFLAGGED to protect their legal rights and make informed decisions.
           </p>
         </motion.div>
 
@@ -77,7 +77,7 @@ export default function GetStarted() {
               Ready to Get Started?
             </h2>
             <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-              Join FinePrint today and experience the future of legal protection. No credit card required.
+              Join REDFLAGGED today and experience the future of legal protection. No credit card required.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link

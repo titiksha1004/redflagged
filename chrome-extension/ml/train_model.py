@@ -67,7 +67,7 @@ def train_model():
         # Load and prepare data
         logger.info("Loading training data...")
         texts, labels = prepare_training_data(
-            os.path.join(data_dir, "fineprint_format.json"),
+            os.path.join(data_dir, "redflagged_format.json"),
             config
         )
         

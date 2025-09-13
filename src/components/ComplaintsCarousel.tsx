@@ -28,7 +28,7 @@ const ComplaintsCarousel: React.FC = () => {
       date: "2 days ago",
       likes: 237,
       retweets: 89,
-      color: "106, 90, 255" // FinePrint purple
+      color: "106, 90, 255" // REDFLAGGED purple
     },
     {
       id: 2,
@@ -38,7 +38,7 @@ const ComplaintsCarousel: React.FC = () => {
       date: "5 days ago",
       likes: 456,
       retweets: 134,
-      color: "106, 90, 255" // FinePrint purple
+      color: "106, 90, 255" // REDFLAGGED purple
     },
     {
       id: 3,
@@ -48,7 +48,7 @@ const ComplaintsCarousel: React.FC = () => {
       date: "1 week ago",
       likes: 892,
       retweets: 341,
-      color: "106, 90, 255" // FinePrint purple
+      color: "106, 90, 255" // REDFLAGGED purple
     },
     {
       id: 4,
@@ -78,7 +78,7 @@ const ComplaintsCarousel: React.FC = () => {
       date: "1 week ago",
       likes: 876,
       retweets: 432,
-      color: "106, 90, 255" // FinePrint purple
+      color: "106, 90, 255" // REDFLAGGED purple
     },
     {
       id: 7,
@@ -108,7 +108,7 @@ const ComplaintsCarousel: React.FC = () => {
       date: "3 days ago",
       likes: 431,
       retweets: 187,
-      color: "106, 90, 255" // FinePrint purple
+      color: "106, 90, 255" // REDFLAGGED purple
     },
     {
       id: 10,
@@ -118,7 +118,7 @@ const ComplaintsCarousel: React.FC = () => {
       date: "6 days ago",
       likes: 528,
       retweets: 242,
-      color: "106, 90, 255" // FinePrint purple
+      color: "106, 90, 255" // REDFLAGGED purple
     }
   ];
 

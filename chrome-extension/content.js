@@ -143,7 +143,7 @@ function createFloatingActionButton(styledComponents) {
         )
       ),
       window.React.createElement(FABContent, { isVisible: isHovered },
-        window.React.createElement(FABText, null, "Analyze this contract with Fineprint")
+        window.React.createElement(FABText, null, "Analyze this contract with REDFLAGGED")
       )
     );
   };
@@ -189,7 +189,7 @@ async function analyzePage() {
     // Add animation keyframes
     const animationStyle = document.createElement('style');
     animationStyle.textContent = `
-      @keyframes fineprint-spin {
+      @keyframes redflagged-spin {
         to { transform: rotate(360deg); }
       }
     `;
@@ -199,11 +199,11 @@ async function analyzePage() {
       console.log('Sending request to API...');
       
       // Get API URL from config
-      const apiUrl = window.FineprintConfig?.getApiUrl() || 'https://api.fineprint.it.com';
+      const apiUrl = window.redflaggedConfig?.getApiUrl() || 'https://api.redflagged.vercel.app';
       const fullUrl = `${apiUrl}/api/analyze`;
       
       // Validate URL security
-      if (!window.FineprintConfig?.isSecureUrl(fullUrl)) {
+      if (!window.redflaggedConfig?.isSecureUrl(fullUrl)) {
         throw new Error('Insecure API endpoint detected');
       }
       
@@ -255,7 +255,7 @@ async function analyzePage() {
       errorMessage.textContent = ''; // Clear previous content
       setSafeHTML(errorMessage, `
         <h3 style="margin: 0 0 8px 0; color: #ef4444;">Analysis Failed</h3>
-        <p style="margin: 0 0 12px 0;">Could not connect to the Fineprint API. Try again or check your connection.</p>
+        <p style="margin: 0 0 12px 0;">Could not connect to the REDFLAGGED API. Try again or check your connection.</p>
         <button style="background: #4f46e5; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer;">Dismiss</button>
       `);
       document.body.appendChild(errorMessage);
@@ -423,7 +423,7 @@ function generateReport(analysis) {
     </head>
     <body>
       <div class="header">
-        <h1>FinePrint Contract Analysis Report</h1>
+        <h1>REDFLAGGED Contract Analysis Report</h1>
         <p>Generated on ${new Date().toLocaleString()}</p>
       </div>
       
@@ -507,11 +507,11 @@ async function generateGroqSummary(text) {
 function showAnalysisResults(analysis, showSummaryTab = false) {
   // Create a modal to show results
   const modal = document.createElement('div');
-  modal.className = 'fineprint-modal';
+  modal.className = 'redflagged-modal';
   
   // Shadow DOM for style isolation
   const shadowHost = document.createElement('div');
-  shadowHost.id = 'fineprint-shadow-host';
+  shadowHost.id = 'redflagged-shadow-host';
   document.body.appendChild(shadowHost);
   
   // Create shadow root
@@ -520,7 +520,7 @@ function showAnalysisResults(analysis, showSummaryTab = false) {
   // Add styles to shadow DOM
   const style = document.createElement('style');
   style.textContent = `
-    .fineprint-modal {
+    .redflagged-modal {
       position: fixed;
       top: 0;
       left: 0;
@@ -534,7 +534,7 @@ function showAnalysisResults(analysis, showSummaryTab = false) {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
     }
     
-    .fineprint-modal-content {
+    .redflagged-modal-content {
       background: white;
       border-radius: 12px;
       max-width: 800px;
@@ -544,7 +544,7 @@ function showAnalysisResults(analysis, showSummaryTab = false) {
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
     }
     
-    .fineprint-modal-header {
+    .redflagged-modal-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -552,18 +552,18 @@ function showAnalysisResults(analysis, showSummaryTab = false) {
       border-bottom: 1px solid #e5e7eb;
     }
     
-    .fineprint-modal-title {
+    .redflagged-modal-title {
       font-size: 24px;
       font-weight: 600;
       color: #111827;
       margin: 0;
     }
     
-    .fineprint-modal-subtitle {
+    .redflagged-modal-subtitle {
       margin-top: 4px;
     }
     
-    .fineprint-risk-level {
+    .redflagged-risk-level {
       display: inline-block;
       padding: 4px 12px;
       border-radius: 20px;
@@ -571,27 +571,27 @@ function showAnalysisResults(analysis, showSummaryTab = false) {
       font-weight: 500;
     }
     
-    .fineprint-risk-level.high {
+    .redflagged-risk-level.high {
       background-color: #fee2e2;
       color: #dc2626;
     }
     
-    .fineprint-risk-level.medium {
+    .redflagged-risk-level.medium {
       background-color: #fef3c7;
       color: #d97706;
     }
     
-    .fineprint-risk-level.low {
+    .redflagged-risk-level.low {
       background-color: #ecfdf5;
       color: #059669;
     }
     
-    .fineprint-modal-actions {
+    .redflagged-modal-actions {
       display: flex;
       gap: 12px;
     }
     
-    .fineprint-button {
+    .redflagged-button {
       display: flex;
       align-items: center;
       gap: 8px;
@@ -606,11 +606,11 @@ function showAnalysisResults(analysis, showSummaryTab = false) {
       transition: background-color 0.2s;
     }
     
-    .fineprint-button:hover {
+    .redflagged-button:hover {
       background-color: #4338ca;
     }
     
-    .fineprint-modal-close {
+    .redflagged-modal-close {
       background: none;
       border: none;
       font-size: 24px;
@@ -618,21 +618,21 @@ function showAnalysisResults(analysis, showSummaryTab = false) {
       cursor: pointer;
     }
     
-    .fineprint-modal-close:hover {
+    .redflagged-modal-close:hover {
       color: #111827;
     }
     
-    .fineprint-modal-body {
+    .redflagged-modal-body {
       padding: 24px;
     }
     
-    .fineprint-tabs {
+    .redflagged-tabs {
       display: flex;
       border-bottom: 1px solid #e5e7eb;
       margin-bottom: 24px;
     }
     
-    .fineprint-tab {
+    .redflagged-tab {
       padding: 12px 24px;
       font-size: 16px;
       font-weight: 500;
@@ -641,33 +641,33 @@ function showAnalysisResults(analysis, showSummaryTab = false) {
       border-bottom: 2px solid transparent;
     }
     
-    .fineprint-tab.active {
+    .redflagged-tab.active {
       color: #4f46e5;
       border-bottom-color: #4f46e5;
     }
     
-    .fineprint-tab-content {
+    .redflagged-tab-content {
       display: none;
     }
     
-    .fineprint-tab-content.active {
+    .redflagged-tab-content.active {
       display: block;
     }
     
-    .fineprint-summary {
+    .redflagged-summary {
       background-color: #f9fafb;
       padding: 20px;
       border-radius: 8px;
       margin-bottom: 24px;
     }
     
-    .fineprint-summary-title {
+    .redflagged-summary-title {
       font-weight: 600;
       margin-bottom: 12px;
       color: #111827;
     }
     
-    .fineprint-red-flag {
+    .redflagged-red-flag {
       background-color: #ffffff;
       border: 1px solid #e5e7eb;
       border-radius: 12px;
@@ -675,60 +675,60 @@ function showAnalysisResults(analysis, showSummaryTab = false) {
       margin-bottom: 16px;
     }
     
-    .fineprint-red-flag.high {
+    .redflagged-red-flag.high {
       border-left: 4px solid #ef4444;
     }
     
-    .fineprint-red-flag.medium {
+    .redflagged-red-flag.medium {
       border-left: 4px solid #f59e0b;
     }
     
-    .fineprint-red-flag.low {
+    .redflagged-red-flag.low {
       border-left: 4px solid #10b981;
     }
     
-    .fineprint-red-flag-header {
+    .redflagged-red-flag-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 12px;
     }
     
-    .fineprint-red-flag-title {
+    .redflagged-red-flag-title {
       font-size: 18px;
       font-weight: 600;
       color: #111827;
       margin: 0;
     }
     
-    .fineprint-red-flag-severity {
+    .redflagged-red-flag-severity {
       padding: 4px 10px;
       border-radius: 20px;
       font-size: 12px;
       font-weight: 500;
     }
     
-    .fineprint-red-flag-severity.high {
+    .redflagged-red-flag-severity.high {
       background-color: #fee2e2;
       color: #b91c1c;
     }
     
-    .fineprint-red-flag-severity.medium {
+    .redflagged-red-flag-severity.medium {
       background-color: #fef3c7;
       color: #b45309;
     }
     
-    .fineprint-red-flag-severity.low {
+    .redflagged-red-flag-severity.low {
       background-color: #d1fae5;
       color: #047857;
     }
     
-    .fineprint-red-flag-description {
+    .redflagged-red-flag-description {
       color: #4b5563;
       margin-bottom: 12px;
     }
     
-    .fineprint-red-flag-text {
+    .redflagged-red-flag-text {
       background-color: #f3f4f6;
       padding: 12px;
       border-radius: 6px;
@@ -739,12 +739,12 @@ function showAnalysisResults(analysis, showSummaryTab = false) {
       word-break: break-word;
     }
     
-    .fineprint-red-flag-recommendation {
+    .redflagged-red-flag-recommendation {
       color: #4f46e5;
       font-style: italic;
     }
     
-    .fineprint-loading {
+    .redflagged-loading {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -752,17 +752,17 @@ function showAnalysisResults(analysis, showSummaryTab = false) {
       padding: 40px;
     }
     
-    .fineprint-spinner {
+    .redflagged-spinner {
       width: 40px;
       height: 40px;
       border: 3px solid #e5e7eb;
       border-top: 3px solid #4f46e5;
       border-radius: 50%;
-      animation: fineprint-spin 1s linear infinite;
+      animation: redflagged-spin 1s linear infinite;
       margin-bottom: 16px;
     }
     
-    @keyframes fineprint-spin {
+    @keyframes redflagged-spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
@@ -772,52 +772,52 @@ function showAnalysisResults(analysis, showSummaryTab = false) {
   // Create initial modal content
   modal.textContent = ''; // Clear previous content
   setSafeHTML(modal, `
-    <div class="fineprint-modal-content">
-      <div class="fineprint-modal-header">
+    <div class="redflagged-modal-content">
+      <div class="redflagged-modal-header">
         <div>
-          <h2 class="fineprint-modal-title">Contract Analysis Results</h2>
-          <div class="fineprint-modal-subtitle">
-            <span class="fineprint-risk-level ${analysis.risk_level}">
+          <h2 class="redflagged-modal-title">Contract Analysis Results</h2>
+          <div class="redflagged-modal-subtitle">
+            <span class="redflagged-risk-level ${analysis.risk_level}">
               Risk Level: ${analysis.risk_level.charAt(0).toUpperCase() + analysis.risk_level.slice(1)}
             </span>
           </div>
         </div>
-        <div class="fineprint-modal-actions">
-          <button class="fineprint-button" id="fineprint-download-report">
+        <div class="redflagged-modal-actions">
+          <button class="redflagged-button" id="redflagged-download-report">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
             Download Report
           </button>
-          <button class="fineprint-modal-close">×</button>
+          <button class="redflagged-modal-close">×</button>
         </div>
       </div>
       
-      <div class="fineprint-modal-body">
-        <div class="fineprint-tabs">
-          <div class="fineprint-tab ${!showSummaryTab ? 'active' : ''}" data-tab="flags">Red Flags (${analysis.red_flags.length})</div>
-          <div class="fineprint-tab ${showSummaryTab ? 'active' : ''}" data-tab="summary">Summary</div>
+      <div class="redflagged-modal-body">
+        <div class="redflagged-tabs">
+          <div class="redflagged-tab ${!showSummaryTab ? 'active' : ''}" data-tab="flags">Red Flags (${analysis.red_flags.length})</div>
+          <div class="redflagged-tab ${showSummaryTab ? 'active' : ''}" data-tab="summary">Summary</div>
         </div>
         
-        <div class="fineprint-tab-content ${!showSummaryTab ? 'active' : ''}" data-tab-content="flags">
+        <div class="redflagged-tab-content ${!showSummaryTab ? 'active' : ''}" data-tab-content="flags">
           ${analysis.red_flags.map(flag => `
-            <div class="fineprint-red-flag ${flag.severity}">
-              <div class="fineprint-red-flag-header">
-                <h4 class="fineprint-red-flag-title">${flag.category}</h4>
-                <span class="fineprint-red-flag-severity ${flag.severity}">
+            <div class="redflagged-red-flag ${flag.severity}">
+              <div class="redflagged-red-flag-header">
+                <h4 class="redflagged-red-flag-title">${flag.category}</h4>
+                <span class="redflagged-red-flag-severity ${flag.severity}">
                   ${flag.severity.charAt(0).toUpperCase() + flag.severity.slice(1)}
                 </span>
               </div>
-              <p class="fineprint-red-flag-description">${flag.description}</p>
-              <div class="fineprint-red-flag-text">${flag.text}</div>
-              <p class="fineprint-red-flag-recommendation">${flag.recommendation}</p>
+              <p class="redflagged-red-flag-description">${flag.description}</p>
+              <div class="redflagged-red-flag-text">${flag.text}</div>
+              <p class="redflagged-red-flag-recommendation">${flag.recommendation}</p>
             </div>
           `).join('')}
         </div>
         
-        <div class="fineprint-tab-content ${showSummaryTab ? 'active' : ''}" data-tab-content="summary">
-          <div class="fineprint-loading">
-            <div class="fineprint-spinner"></div>
+        <div class="redflagged-tab-content ${showSummaryTab ? 'active' : ''}" data-tab-content="summary">
+          <div class="redflagged-loading">
+            <div class="redflagged-spinner"></div>
             <p>Generating summary...</p>
           </div>
         </div>
@@ -829,35 +829,35 @@ function showAnalysisResults(analysis, showSummaryTab = false) {
   shadowRoot.appendChild(modal);
   
   // Add event listeners
-  const closeButton = shadowRoot.querySelector('.fineprint-modal-close');
+  const closeButton = shadowRoot.querySelector('.redflagged-modal-close');
   closeButton.addEventListener('click', () => {
     document.body.removeChild(shadowHost);
   });
   
   // Download report button
-  const downloadButton = shadowRoot.querySelector('#fineprint-download-report');
+  const downloadButton = shadowRoot.querySelector('#redflagged-download-report');
   downloadButton.addEventListener('click', () => {
     window.open(generateReport(analysis), '_blank');
   });
   
   // Tab switching
-  const tabs = shadowRoot.querySelectorAll('.fineprint-tab');
+  const tabs = shadowRoot.querySelectorAll('.redflagged-tab');
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
       // Deactivate all tabs
       tabs.forEach(t => t.classList.remove('active'));
-      shadowRoot.querySelectorAll('.fineprint-tab-content').forEach(content => {
+      shadowRoot.querySelectorAll('.redflagged-tab-content').forEach(content => {
         content.classList.remove('active');
       });
       
       // Activate clicked tab
       tab.classList.add('active');
       const tabName = tab.getAttribute('data-tab');
-      shadowRoot.querySelector(`.fineprint-tab-content[data-tab-content="${tabName}"]`).classList.add('active');
+      shadowRoot.querySelector(`.redflagged-tab-content[data-tab-content="${tabName}"]`).classList.add('active');
       
       // If summary tab and not yet loaded, generate summary
       if (tabName === 'summary' && !tab.hasAttribute('data-loaded')) {
-        const summaryContent = shadowRoot.querySelector('.fineprint-tab-content[data-tab-content="summary"]');
+        const summaryContent = shadowRoot.querySelector('.redflagged-tab-content[data-tab-content="summary"]');
         
         // Extract text from the page for summarization
         const pageText = extractContractText();
@@ -866,9 +866,9 @@ function showAnalysisResults(analysis, showSummaryTab = false) {
         generateGroqSummary(pageText).then(summary => {
           summaryContent.textContent = ''; // Clear previous content
           setSafeHTML(summaryContent, `
-            <div class="fineprint-summary">
-              <h3 class="fineprint-summary-title">AI-Generated Summary</h3>
-              <div class="fineprint-summary-content">${formatSummary(summary)}</div>
+            <div class="redflagged-summary">
+              <h3 class="redflagged-summary-title">AI-Generated Summary</h3>
+              <div class="redflagged-summary-content">${formatSummary(summary)}</div>
             </div>
           `);
           
@@ -880,7 +880,7 @@ function showAnalysisResults(analysis, showSummaryTab = false) {
   
   // If summary tab should be shown initially, trigger its click event
   if (showSummaryTab) {
-    const summaryTab = shadowRoot.querySelector('.fineprint-tab[data-tab="summary"]');
+    const summaryTab = shadowRoot.querySelector('.redflagged-tab[data-tab="summary"]');
     if (summaryTab) {
       summaryTab.click();
     }
@@ -939,14 +939,14 @@ function createFallbackStyleElements() {
   // Add fallback styles
   const style = document.createElement('style');
   style.textContent = `
-    #fineprint-fab {
+    #redflagged-fab {
       position: fixed;
       right: 20px;
       bottom: 20px;
       z-index: 9999;
     }
     
-    #fineprint-button {
+    #redflagged-button {
       background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
       color: white;
       border: none;
@@ -961,12 +961,12 @@ function createFallbackStyleElements() {
       transition: all 0.2s ease-in-out;
     }
     
-    #fineprint-button:hover {
+    #redflagged-button:hover {
       transform: scale(1.05);
       box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);
     }
     
-    #fineprint-tooltip {
+    #redflagged-tooltip {
       position: absolute;
       right: 70px;
       top: 50%;
@@ -981,7 +981,7 @@ function createFallbackStyleElements() {
       white-space: nowrap;
     }
     
-    #fineprint-button:hover + #fineprint-tooltip {
+    #redflagged-button:hover + #redflagged-tooltip {
       display: flex;
     }
   `;
@@ -1005,7 +1005,7 @@ async function initializeApp() {
       addHighlightStyles();
       
       const appContainer = document.createElement('div');
-      appContainer.id = 'fineprint-extension-container';
+      appContainer.id = 'redflagged-extension-container';
       document.body.appendChild(appContainer);
       
       const styledComponents = createStyledComponents();
@@ -1019,7 +1019,7 @@ async function initializeApp() {
       
       window.ReactDOM.render(
         window.React.createElement(App),
-        document.getElementById('fineprint-extension-container')
+        document.getElementById('redflagged-extension-container')
       );
     } catch (styledError) {
       // Fallback to basic HTML/CSS if styled-components fails
@@ -1031,11 +1031,11 @@ async function initializeApp() {
       
       // Create basic elements
       const fabContainer = document.createElement('div');
-      fabContainer.id = 'fineprint-fab';
+      fabContainer.id = 'redflagged-fab';
       document.body.appendChild(fabContainer);
       
       const fabButton = document.createElement('button');
-      fabButton.id = 'fineprint-button';
+      fabButton.id = 'redflagged-button';
       fabButton.textContent = ''; // Clear previous content
       setSafeHTML(fabButton, `
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1048,12 +1048,12 @@ async function initializeApp() {
       fabContainer.appendChild(fabButton);
       
       const fabTooltip = document.createElement('div');
-      fabTooltip.id = 'fineprint-tooltip';
-      fabTooltip.textContent = 'Analyze this contract with Fineprint';
+      fabTooltip.id = 'redflagged-tooltip';
+      fabTooltip.textContent = 'Analyze this contract with redflagged';
       fabContainer.appendChild(fabTooltip);
     }
   } catch (error) {
-    console.error("Error initializing Fineprint extension:", error);
+    console.error("Error initializing redflagged extension:", error);
   }
 }
 
@@ -1062,56 +1062,56 @@ initializeApp();
 
 // Add CSS for highlights
 function addHighlightStyles() {
-  if (!document.querySelector('#fineprint-highlight-styles')) {
+  if (!document.querySelector('#redflagged-highlight-styles')) {
     const style = document.createElement('style');
-    style.id = 'fineprint-highlight-styles';
+    style.id = 'redflagged-highlight-styles';
     style.textContent = `
-      .fineprint-highlight {
+      .redflagged-highlight {
         cursor: pointer;
         transition: all 0.3s ease;
         border-radius: 3px;
         position: relative;
       }
       
-      .fineprint-high {
+      .redflagged-high {
         background-color: rgba(239, 68, 68, 0.15);
         box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.15);
         text-decoration: underline wavy rgba(239, 68, 68, 0.5);
         text-decoration-skip-ink: none;
       }
       
-      .fineprint-medium {
+      .redflagged-medium {
         background-color: rgba(245, 158, 11, 0.15);
         box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.15);
         text-decoration: underline wavy rgba(245, 158, 11, 0.5);
         text-decoration-skip-ink: none;
       }
       
-      .fineprint-low {
+      .redflagged-low {
         background-color: rgba(34, 197, 94, 0.15);
         box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.15);
         text-decoration: underline wavy rgba(34, 197, 94, 0.5);
         text-decoration-skip-ink: none;
       }
       
-      .fineprint-highlight:hover {
+      .redflagged-highlight:hover {
         transition: all 0.2s ease;
       }
       
-      .fineprint-high:hover {
+      .redflagged-high:hover {
         background-color: rgba(239, 68, 68, 0.25);
       }
       
-      .fineprint-medium:hover {
+      .redflagged-medium:hover {
         background-color: rgba(245, 158, 11, 0.25);
       }
       
-      .fineprint-low:hover {
+      .redflagged-low:hover {
         background-color: rgba(34, 197, 94, 0.25);
       }
       
       /* Tooltip styles */
-      .fineprint-tooltip {
+      .redflagged-tooltip {
         position: absolute;
         z-index: 10000;
         width: 300px;
@@ -1121,16 +1121,16 @@ function addHighlightStyles() {
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         font-size: 14px;
         overflow: hidden;
-        animation: fineprint-tooltip-appear 0.2s ease forwards;
+        animation: redflagged-tooltip-appear 0.2s ease forwards;
         pointer-events: none;
       }
       
-      @keyframes fineprint-tooltip-appear {
+      @keyframes redflagged-tooltip-appear {
         from { opacity: 0; transform: translateY(5px); }
         to { opacity: 1; transform: translateY(0); }
       }
       
-      .fineprint-tooltip-header {
+      .redflagged-tooltip-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -1139,12 +1139,12 @@ function addHighlightStyles() {
         border-bottom: 1px solid #eee;
       }
       
-      .fineprint-tooltip-title {
+      .redflagged-tooltip-title {
         font-weight: 600;
         color: #333;
       }
       
-      .fineprint-tooltip-severity {
+      .redflagged-tooltip-severity {
         font-size: 12px;
         font-weight: 600;
         padding: 2px 8px;
@@ -1152,32 +1152,32 @@ function addHighlightStyles() {
         text-transform: capitalize;
       }
       
-      .fineprint-tooltip-high .fineprint-tooltip-severity {
+      .redflagged-tooltip-high .redflagged-tooltip-severity {
         background-color: #fee2e2;
         color: #b91c1c;
       }
       
-      .fineprint-tooltip-medium .fineprint-tooltip-severity {
+      .redflagged-tooltip-medium .redflagged-tooltip-severity {
         background-color: #ffedd5;
         color: #c2410c;
       }
       
-      .fineprint-tooltip-low .fineprint-tooltip-severity {
+      .redflagged-tooltip-low .redflagged-tooltip-severity {
         background-color: #dcfce7;
         color: #166534;
       }
       
-      .fineprint-tooltip-body {
+      .redflagged-tooltip-body {
         padding: 12px 15px;
         color: #4b5563;
         line-height: 1.5;
       }
       
-      .fineprint-tooltip-body p {
+      .redflagged-tooltip-body p {
         margin: 0;
       }
       
-      .fineprint-tooltip-top:after {
+      .redflagged-tooltip-top:after {
         content: '';
         position: absolute;
         bottom: -10px;
@@ -1188,7 +1188,7 @@ function addHighlightStyles() {
         border-color: white transparent transparent;
       }
       
-      .fineprint-tooltip-bottom:after {
+      .redflagged-tooltip-bottom:after {
         content: '';
         position: absolute;
         top: -10px;
@@ -1210,7 +1210,7 @@ function highlightRedFlags(redFlags) {
   addHighlightStyles();
   
   // Remove existing highlights
-  const existingHighlights = document.querySelectorAll('.fineprint-highlight');
+  const existingHighlights = document.querySelectorAll('.redflagged-highlight');
   existingHighlights.forEach(el => {
     const parent = el.parentNode;
     if (parent) {
@@ -1257,7 +1257,7 @@ function highlightRedFlags(redFlags) {
         }
 
         // Avoid highlighting elements that are already part of our UI or invisible
-        if (element.closest('.fineprint-modal') || element.closest('#fineprint-shadow-host') || !element.offsetParent) {
+        if (element.closest('.redflagged-modal') || element.closest('#redflagged-shadow-host') || !element.offsetParent) {
             return; // Skip elements within our modal or hidden elements
         }
         
@@ -1273,7 +1273,7 @@ function highlightRedFlags(redFlags) {
   });
   
   // Add click handlers to scroll to elements when clicked
-  document.querySelectorAll('.fineprint-highlight').forEach(el => {
+  document.querySelectorAll('.redflagged-highlight').forEach(el => {
     el.addEventListener('click', (e) => {
       e.stopPropagation();
       el.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -1298,7 +1298,7 @@ function highlightElement(element, flag, searchTerm) {
             acceptNode: function(node) {
                 // *** Added check for SVG parentage and closest method ***
                 const parent = node.parentElement;
-                if (!parent || typeof parent.closest !== 'function' || parent.closest('script, style, svg, .fineprint-highlight')) {
+                if (!parent || typeof parent.closest !== 'function' || parent.closest('script, style, svg, .redflagged-highlight')) {
                     return NodeFilter.FILTER_REJECT;
                 }
                 // Check if the node's text contains the search term (case-insensitive)

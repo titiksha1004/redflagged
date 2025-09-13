@@ -1,14 +1,14 @@
-#fineprint-fab {
+#redflagged-fab {
   opacity: 0.9;
   transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
-#fineprint-fab:hover {
+#redflagged-fab:hover {
   opacity: 1;
   transform: scale(1.1);
 }
 
-.fineprint-highlight {
+.redflagged-highlight {
   position: relative;
   display: inline;
   padding: 2px 4px;
@@ -17,26 +17,26 @@
   transition: background-color 0.2s ease;
 }
 
-.fineprint-highlight:hover {
+.redflagged-highlight:hover {
   filter: brightness(0.95);
 }
 
-.fineprint-high {
+.redflagged-high {
   background-color: rgba(239, 68, 68, 0.2);
   border-bottom: 2px solid #ef4444;
 }
 
-.fineprint-medium {
+.redflagged-medium {
   background-color: rgba(245, 158, 11, 0.2);
   border-bottom: 2px solid #f59e0b;
 }
 
-.fineprint-low {
+.redflagged-low {
   background-color: rgba(34, 197, 94, 0.2);
   border-bottom: 2px solid #22c55e;
 }
 
-.fineprint-highlight::after {
+.redflagged-highlight::after {
   content: attr(title);
   position: absolute;
   bottom: 100%;
@@ -56,7 +56,7 @@
   transition: all 0.2s ease;
 }
 
-.fineprint-highlight:hover::after {
+.redflagged-highlight:hover::after {
   opacity: 1;
   visibility: visible;
   transform: translateX(-50%) translateY(-8px);

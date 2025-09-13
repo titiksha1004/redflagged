@@ -43,7 +43,7 @@ export default function Extension() {
                 <Shield className="h-24 w-24 text-indigo-600" />
               </div>
               <div className="text-left">
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">FinePrint: Contract Analyzer</h3>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">REDFLAGGED: Contract Analyzer</h3>
                 <div className="flex gap-2 mb-6">
                   <div className="text-sm px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full">AI-Powered</div>
                   <div className="text-sm px-3 py-1 bg-green-100 text-green-700 rounded-full">Free</div>
@@ -106,7 +106,7 @@ export default function Extension() {
         >
           <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-3xl shadow-xl p-12 text-white">
             <h2 className="text-3xl font-bold mb-6">
-              Join {/* TODO: Add number of users */2}+ Users Protected by FinePrint
+              Join {/* TODO: Add number of users */2}+ Users Protected by REDFLAGGED
             </h2>
             <p className="text-xl mb-8 max-w-2xl mx-auto text-white/90">
               Install our Chrome Extension today and never sign a bad contract again. Free forever.

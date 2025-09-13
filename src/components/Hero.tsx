@@ -32,7 +32,7 @@ export default function Hero() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
-                FinePrint uses AI to analyze contracts, identify risky clauses, and protect your rights. 
+                REDFLAGGED uses AI to analyze contracts, identify risky clauses, and protect your rights. 
                 Never sign a bad contract again.
               </motion.p>
               

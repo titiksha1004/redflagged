@@ -78,7 +78,7 @@ export default function Navigation() {
             <Link to="/" className="flex items-center">
               <Shield className="h-6 w-6 sm:h-8 sm:w-8 text-indigo-600" />
               <span className="ml-2 text-base sm:text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                FinePrint
+                REDFLAGGED
               </span>
             </Link>
           </div>

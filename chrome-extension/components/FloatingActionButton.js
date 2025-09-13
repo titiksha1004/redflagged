@@ -124,7 +124,7 @@ const FloatingActionButton = ({ onAnalyze }) => {
         )
       ),
       React.createElement(FABContent, { isVisible: isHovered },
-        React.createElement(FABText, null, "Analyze this contract with Fineprint")
+        React.createElement(FABText, null, "Analyze this contract with REDFLAGGED")
       )
     )
   );

@@ -1,6 +1,6 @@
-# FinePrint Chrome Extension
+# REDFLAGGED Chrome Extension
 
-![FinePrint Logo](icons/icon48.png)
+![REDFLAGGED Logo](icons/icon48.png)
 
 AI-powered contract analysis and consumer protection extension for Chrome.
 
@@ -18,12 +18,12 @@ AI-powered contract analysis and consumer protection extension for Chrome.
 2. Open Chrome and navigate to `chrome://extensions/`
 3. Enable "Developer mode" using the toggle in the top-right corner
 4. Click "Load unpacked" and select the `chrome-extension` folder
-5. The FinePrint extension should now appear in your extensions list with the shield logo
+5. The REDFLAGGED extension should now appear in your extensions list with the shield logo
 
 ## Usage
 
 1. Navigate to any website with legal terms or contracts
-2. Click the FinePrint shield icon in your Chrome toolbar
+2. Click the REDFLAGGED shield icon in your Chrome toolbar
 3. Use the "Analyze Contract" button to scan the page
 4. Review the highlighted issues and risk assessment
 5. Use the "Highlight Issues" button to see problematic sections in the document

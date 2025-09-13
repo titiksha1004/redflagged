@@ -23,6 +23,6 @@ def test_analyze():
     print(json.dumps(response.json(), indent=2))
 
 if __name__ == "__main__":
-    print("Testing Fineprint API...")
+    print("Testing REDFLAGGED API...")
     test_health()
     test_analyze() 
