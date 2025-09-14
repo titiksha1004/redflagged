@@ -294,10 +294,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return data;
     }
     
-    if (password.length < 8 || !/[A-Z]/.test(password) || !/[0-9]/.test(password)) {
-      console.log('️ Password requirements not met');
-      toast.error("Password must be at least 8 characters long and include a number and an uppercase letter.");
-      throw new Error("Password requirements not met");
+    if (password.length < 8) {
+      console.log('️ Password too short');
+      toast.error("Password must be at least 8 characters long.");
+      throw new Error("Password too short");
     }
   
     try {
