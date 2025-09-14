@@ -1,0 +1,190 @@
+constitution:
+  name: "Contract Audit Constitutional Framework"
+  version: "1.0"
+  description: "Crisp, written rulebook for auditing contracts and detecting red flags"
+  
+  # Core Principles
+  principles:
+    - name: "Consistency"
+      description: "Apply same standards across all contracts"
+      weight: 1.0
+    - name: "Defensibility" 
+      description: "Every decision must be backed by specific constitutional rules"
+      weight: 1.0
+    - name: "Transparency"
+      description: "Provide clear rationale for each judgment"
+      weight: 1.0
+
+  # Audit Rules - The Core Constitution
+  audit_rules:
+    
+    # CRITICAL VIOLATIONS (Must be flagged)
+    critical_violations:
+      
+      - rule_id: "AUTO_RENEWAL_001"
+        name: "Automatic Renewal Without Notice"
+        description: "Contract automatically renews without adequate notice period"
+        severity: "CRITICAL"
+        weight: 10
+        criteria:
+          - "Contains automatic renewal language"
+          - "Notice period < 30 days OR no notice period specified"
+          - "No opt-out mechanism clearly stated"
+        detection_patterns:
+          - "automatically renew"
+          - "auto-renew"
+          - "renewal term"
+        required_elements:
+          missing: ["cancellation notice", "opt-out procedure"]
+        judgment_template: |
+          VIOLATION: Automatic renewal clause detected without adequate consumer protection.
+          EVIDENCE: {evidence_text}
+          CONSTITUTIONAL_BASIS: Rule AUTO_RENEWAL_001 - Automatic renewals require ≥30 days notice
+          RECOMMENDATION: Add explicit 30+ day cancellation notice requirement
+      
+      - rule_id: "LIABILITY_001"
+        name: "Unlimited Liability Exposure"
+        description: "Contract creates unlimited liability for consumer"
+        severity: "CRITICAL"
+        weight: 10
+        criteria:
+          - "Contains unlimited liability language"
+          - "No liability caps specified"
+          - "Indemnification clauses favor provider"
+        detection_patterns:
+          - "unlimited liability"
+          - "indemnify"
+          - "hold harmless"
+        judgment_template: |
+          VIOLATION: Unlimited liability exposure detected.
+          EVIDENCE: {evidence_text}
+          CONSTITUTIONAL_BASIS: Rule LIABILITY_001 - Consumer liability must be reasonable and capped
+          RECOMMENDATION: Add liability limitations and caps
+
+    # HIGH PRIORITY VIOLATIONS
+    high_priority_violations:
+      
+      - rule_id: "FEES_001"
+        name: "Hidden or Variable Fees"
+        description: "Fees that can change without clear notification"
+        severity: "HIGH"
+        weight: 8
+        criteria:
+          - "Fee structure not clearly defined"
+          - "Fees can increase without user consent"
+          - "Additional charges not itemized"
+        detection_patterns:
+          - "additional fees"
+          - "charges may apply"
+          - "fee increases"
+        judgment_template: |
+          VIOLATION: Hidden or variable fee structure detected.
+          EVIDENCE: {evidence_text}
+          CONSTITUTIONAL_BASIS: Rule FEES_001 - All fees must be clearly disclosed upfront
+          RECOMMENDATION: Provide complete fee schedule with no hidden charges
+
+      - rule_id: "ARBITRATION_001"
+        name: "Forced Arbitration"
+        description: "Mandatory arbitration that limits legal recourse"
+        severity: "HIGH"
+        weight: 7
+        criteria:
+          - "Mandatory arbitration clause present"
+          - "Class action waiver included"
+          - "Consumer cannot opt-out"
+        detection_patterns:
+          - "binding arbitration"
+          - "arbitration agreement"
+          - "class action waiver"
+        judgment_template: |
+          VIOLATION: Forced arbitration clause limits consumer legal rights.
+          EVIDENCE: {evidence_text}
+          CONSTITUTIONAL_BASIS: Rule ARBITRATION_001 - Arbitration should be optional, not mandatory
+          RECOMMENDATION: Make arbitration optional or provide opt-out mechanism
+
+    # MEDIUM PRIORITY VIOLATIONS
+    medium_priority_violations:
+      
+      - rule_id: "DATA_001"
+        name: "Excessive Data Collection"
+        description: "Collects more data than necessary for service"
+        severity: "MEDIUM"
+        weight: 5
+        criteria:
+          - "Broad data collection permissions"
+          - "Data sharing with third parties"
+          - "No data retention limits"
+        detection_patterns:
+          - "collect information"
+          - "share data"
+          - "third parties"
+        judgment_template: |
+          VIOLATION: Excessive data collection detected.
+          EVIDENCE: {evidence_text}
+          CONSTITUTIONAL_BASIS: Rule DATA_001 - Data collection must be minimal and purpose-limited
+          RECOMMENDATION: Limit data collection to service requirements only
+
+  # Required Clauses - Must be present
+  required_clauses:
+    
+    - clause_id: "CANCELLATION_001"
+      name: "Clear Cancellation Terms"
+      description: "Contract must specify how to cancel"
+      severity: "REQUIRED"
+      weight: 6
+      detection_patterns:
+        - "cancel"
+        - "terminate"
+        - "end subscription"
+      judgment_template: |
+        MISSING REQUIRED CLAUSE: Clear cancellation procedure not found.
+        CONSTITUTIONAL_BASIS: Clause CANCELLATION_001 - Cancellation terms must be clearly stated
+        RECOMMENDATION: Add section detailing cancellation process and timeline
+
+    - clause_id: "CONTACT_001"
+      name: "Contact Information"
+      description: "Consumer protection laws require accessible contact information"
+      severity: "REQUIRED"
+      weight: 4
+      detection_patterns:
+        - "phone.*number"
+        - "email.*address"
+        - "customer.*service.*\\d"
+        - "support.*phone"
+        - "contact.*us.*at"
+        - "\\d{3}-\\d{3}-\\d{4}"
+        - "\\w+@\\w+\\.\\w+"
+      judgment_template: |
+        ANALYSIS: Contact information assessment based on evidence.
+        EVIDENCE: {evidence_text}
+        CONSTITUTIONAL_BASIS: Consumer protection laws require accessible contact information for dispute resolution
+        RECOMMENDATION: Ensure clear contact methods (phone, email, address) are provided for customer support
+
+  # Calibration Rules
+  calibration:
+    confidence_thresholds:
+      critical: 0.9    # 90% confidence required for critical violations
+      high: 0.8        # 80% confidence for high priority
+      medium: 0.7      # 70% confidence for medium priority
+      required: 0.85   # 85% confidence for missing required clauses
+    
+    uncertainty_handling:
+      - "If confidence < threshold, flag for human review"
+      - "Provide confidence score with every judgment"
+      - "Track calibration metrics over time"
+
+  # Reporting Standards
+  reporting:
+    judgment_format:
+      - "Rule ID and name"
+      - "Constitutional basis"
+      - "Evidence text with location"
+      - "Confidence score"
+      - "Specific recommendation"
+      - "Severity classification"
+    
+    cost_transparency:
+      - "Processing time per contract"
+      - "Model inference cost"
+      - "Accuracy metrics"
+      - "Known limitations"
