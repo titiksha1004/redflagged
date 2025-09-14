@@ -4,6 +4,7 @@ import { Send, Bot, User, ExternalLink, Book, Scale, Gavel, Search } from 'lucid
 import { sendMessageToClaude } from '../lib/claude-main';
 import { toast } from 'sonner';
 import { Resizable } from 're-resizable';
+import markdownit from 'markdown-it';
 
 interface Message {
   id: string;
@@ -11,6 +12,8 @@ interface Message {
   content: string;
   timestamp: Date;
 }
+
+const md = markdownit();
 
 export default function LegalResearch() {
   const [messages, setMessages] = useState<Message[]>([
@@ -157,7 +160,11 @@ export default function LegalResearch() {
                               : 'bg-white text-gray-800 border border-gray-100'
                           }`}
                         >
-                          {message.content}
+                          {message.role === 'assistant' ? (
+                            <div dangerouslySetInnerHTML={{ __html: md.render(message.content) }} />
+                          ) : (
+                            message.content
+                          )}
                         </div>
                       </div>
                     </motion.div>
