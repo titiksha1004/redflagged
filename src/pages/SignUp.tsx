@@ -215,10 +215,9 @@ export default function SignUp() {
       return;
     }
 
-    // Update password requirements to match AuthContext
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$/;
-    if (!passwordRegex.test(password)) {
-      toast.error('Password must be at least 12 characters with uppercase, lowercase, number, and special character (@$!%*?&)');
+    // Password validation
+    if (password.length < 8) {
+      toast.error('Password must be at least 8 characters long');
       return;
     }
 
