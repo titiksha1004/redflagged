@@ -76,9 +76,9 @@ export default function Navigation() {
         <div className="flex justify-between h-14 sm:h-16">
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
-              <Shield className="h-6 w-6 sm:h-8 sm:w-8 text-indigo-600" />
-              <span className="ml-2 text-base sm:text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                REDFLAGGED
+              <Shield className="h-10 w-10 sm:h-12 sm:w-12 text-indigo-600" />
+              <span className="ml-3 text-2xl sm:text-3xl font-bold">
+                <span className="text-black">RED</span><span className="text-black">FLAGGED</span>
               </span>
             </Link>
           </div>
