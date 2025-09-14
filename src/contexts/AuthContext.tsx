@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, startTransition } from 'react';
 import { User } from '@supabase/supabase-js';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { toast } from 'sonner';
@@ -106,11 +106,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Store in localStorage for persistent fallback auth
     localStorage.setItem('fallback_auth_user', JSON.stringify(userToStore));
     
-    // Async state update to avoid React warnings
-    setTimeout(() => {
+    // Use React's scheduling to avoid setState during render warnings
+    startTransition(() => {
       setUser(tempUser);
       setRole(userData?.role || 'user');
-    }, 0);
+    });
     
     return {
       tempUser,
@@ -296,7 +296,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     
     if (password.length < 8) {
       console.log('️ Password too short');
-      toast.error("Password must be at least 8 characters long.");
+      startTransition(() => {
+        toast.error("Password must be at least 8 characters long.");
+      });
       throw new Error("Password too short");
     }
   
@@ -337,7 +339,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         console.log('Email confirmation not required');
       }
       
-      toast.success('Check your email to confirm your account!');
+      startTransition(() => {
+        toast.success('Check your email to confirm your account!');
+      });
       return data;
     } catch (error: any) {
       console.error('❌ Exception during signup:', error);
@@ -452,7 +456,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       console.log('Signin successful:', data.user.id);
       fetchUserRole(data.user.id);
       
-      toast.success('Successfully signed in!');
+      startTransition(() => {
+        toast.success('Successfully signed in!');
+      });
       return data;
     } catch (error: any) {
       console.error('❌ Exception during signin:', error);
@@ -467,7 +473,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signInWithGoogle = async () => {
     if (!supabaseConfigured) {
-      toast.error("Authentication is not configured.");
+      startTransition(() => {
+        toast.error("Authentication is not configured.");
+      });
       throw new Error("Supabase not configured");
     }
     
@@ -498,24 +506,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         throw error;
       }
     } catch (error: any) {
-      console.error('Google OAuth error:', error);
-      
-      // Handle network errors or configuration issues
-      if (error.message?.includes('Failed to fetch') || 
-          error.message?.includes('can\'t reach this page') ||
-          error.message?.includes('ERR_NAME_NOT_RESOLVED')) {
-        toast.error("Google OAuth is not configured. Please use email/password sign-in or contact support.");
-        return;
-      }
-      
-      toast.error(`Google sign in failed: ${error.message}`);
+      startTransition(() => {
+        toast.error(`Google sign in failed: ${error.message}`);
+      });
       throw error;
     }
   };
 
   const signInWithGithub = async () => {
     if (!supabaseConfigured) {
-      toast.error("Authentication is not configured.");
+      startTransition(() => {
+        toast.error("Authentication is not configured.");
+      });
       throw new Error("Supabase not configured");
     }
     
@@ -545,24 +547,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         throw error;
       }
     } catch (error: any) {
-      console.error('GitHub OAuth error:', error);
-      
-      // Handle network errors or configuration issues
-      if (error.message?.includes('Failed to fetch') || 
-          error.message?.includes('can\'t reach this page') ||
-          error.message?.includes('ERR_NAME_NOT_RESOLVED')) {
-        toast.error("GitHub OAuth is not configured. Please use email/password sign-in or contact support.");
-        return;
-      }
-      
-      toast.error(`GitHub sign in failed: ${error.message}`);
+      startTransition(() => {
+        toast.error(`GitHub sign in failed: ${error.message}`);
+      });
       throw error;
     }
   };
 
   const resetPassword = async (email: string) => {
     if (!supabaseConfigured) {
-      toast.error("Authentication is not configured.");
+      startTransition(() => {
+        toast.error("Authentication is not configured.");
+      });
       throw new Error("Supabase not configured");
     }
     
@@ -571,9 +567,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         redirectTo: `${window.location.origin}/reset-password`,
       });
       if (error) throw error;
-      toast.success('Password reset instructions sent to your email!');
+      startTransition(() => {
+        toast.success('Password reset instructions sent to your email!');
+      });
     } catch (error: any) {
-      toast.error(`Failed to send reset email: ${error.message}`);
+      startTransition(() => {
+        toast.error(`Failed to send reset email: ${error.message}`);
+      });
       throw error;
     }
   };
@@ -590,13 +590,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (error) throw error;
       setUser(null);
       setRole(null);
-      toast.success('Successfully signed out!');
+      startTransition(() => {
+        toast.success('Successfully signed out!');
+      });
     } catch (error) {
-      if (error instanceof Error) {
-        toast.error(error.message);
-      } else {
-        toast.error('An unexpected error occurred');
-      }
+      startTransition(() => {
+        if (error instanceof Error) {
+          toast.error(error.message);
+        } else {
+          toast.error('An unexpected error occurred');
+        }
+      });
       throw error;
     }
   };
@@ -619,18 +623,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-// Export as a named constant rather than a function declaration
-// This makes it compatible with Fast Refresh
-export const useAuth = (() => {
-  // This function only runs once during initial evaluation
-  // and returns the actual hook function that will be used
-  const useAuthHook = () => {
-    const context = useContext(AuthContext);
-    if (context === undefined) {
-      throw new Error('useAuth must be used within an AuthProvider');
-    }
-    return context;
-  };
-  
-  return useAuthHook;
-})(); // IIFE to create a stable reference
+// Custom hook to use auth context
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+};

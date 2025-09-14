@@ -9,6 +9,8 @@ import {
   type DocumentAnalysis,
   type ExtractedTerm,
 } from "../services/documentAnalyzer";
+import { dynamicAnalyzer, type DynamicAnalysisResult } from "../services/dynamicDocumentAnalyzer";
+import { highlightingEngine } from "../services/highlightingEngine";
 import { exportAnalysisToPDF } from "../services/pdfExporter";
 
 interface DocumentVisualizerProps {
@@ -39,16 +41,41 @@ export function DocumentVisualizer({
   onClose,
 }: DocumentVisualizerProps) {
   const [analysis, setAnalysis] = useState<DocumentAnalysis | null>(null);
+  const [dynamicAnalysis, setDynamicAnalysis] = useState<DynamicAnalysisResult | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [exporting, setExporting] = useState(false);
+  const [analysisMode, setAnalysisMode] = useState<'standard' | 'dynamic'>('dynamic');
 
   useEffect(() => {
     const loadAnalysis = async () => {
       try {
         setLoading(true);
-        const result = await analyzeDocument(document);
-        setAnalysis(result);
+        
+        if (analysisMode === 'dynamic' && document.content) {
+          // Use dynamic analysis with highlighting
+          const documentType = dynamicAnalyzer.detectDocumentType(document.content, document.title);
+          const dynamicResult = await dynamicAnalyzer.analyzeDocument(
+            document.content,
+            documentType
+          );
+          
+          // Apply highlighting to the content
+          const highlightedContent = highlightingEngine.applyHighlighting(
+            dynamicResult.structured_text,
+            dynamicResult.highlights,
+            dynamicResult.visual_config.color_scheme
+          );
+          
+          setDynamicAnalysis({
+            ...dynamicResult,
+            structured_text: highlightedContent
+          });
+        } else {
+          // Fallback to standard analysis
+          const result = await analyzeDocument(document);
+          setAnalysis(result);
+        }
       } catch (err) {
         setError(
           err instanceof Error ? err.message : "Failed to analyze document"
@@ -59,7 +86,7 @@ export function DocumentVisualizer({
     };
 
     loadAnalysis();
-  }, [document]);
+  }, [document, analysisMode]);
 
   const handleExport = async () => {
     if (!analysis) return;
@@ -116,7 +143,10 @@ export function DocumentVisualizer({
     );
   }
 
-  if (!analysis) return null;
+  if (!analysis && !dynamicAnalysis) return null;
+
+  // Use dynamic analysis if available, fallback to standard analysis
+  const currentAnalysis = dynamicAnalysis || analysis;
 
   return (
     <motion.div
@@ -170,25 +200,53 @@ export function DocumentVisualizer({
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div
                 className={`p-4 rounded-lg ${
-                  riskLevelColors[analysis.riskLevel]
+                  dynamicAnalysis 
+                    ? riskLevelColors[dynamicAnalysis.summary?.overall_risk || 'medium']
+                    : riskLevelColors[analysis?.riskLevel || 'medium']
                 }`}
               >
                 <p className="text-sm font-medium">Risk Level</p>
                 <p className="text-2xl font-bold">
-                  {analysis.riskLevel.toUpperCase()}
+                  {dynamicAnalysis 
+                    ? (dynamicAnalysis.summary?.overall_risk || 'medium').toUpperCase()
+                    : (analysis?.riskLevel || 'medium').toUpperCase()
+                  }
                 </p>
               </div>
               <div className="bg-gray-50 p-4 rounded-lg">
-                <p className="text-sm font-medium">Risk Score</p>
+                <p className="text-sm font-medium">
+                  {dynamicAnalysis ? 'Processing Time' : 'Risk Score'}
+                </p>
                 <p className="text-2xl font-bold">
-                  {analysis.riskScore.toFixed(1)}
+                  {dynamicAnalysis 
+                    ? `${dynamicAnalysis.summary?.processing_time || 0}ms`
+                    : analysis?.riskScore?.toFixed(1) || '0.0'
+                  }
                 </p>
               </div>
             </div>
+            
+            {/* Dynamic Analysis Summary */}
+            {dynamicAnalysis && (
+              <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <p className="text-sm font-medium">Highlights</p>
+                  <p className="text-2xl font-bold">
+                    {dynamicAnalysis.highlights?.length || 0}
+                  </p>
+                </div>
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <p className="text-sm font-medium">Document Type</p>
+                  <p className="text-lg font-bold capitalize">
+                    {(dynamicAnalysis.document_type || 'document').replace('_', ' ')}
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Clauses */}
-          {analysis.clauses.length > 0 && (
+          {analysis && analysis.clauses.length > 0 && (
             <div className="mb-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-3">
                 Key Clauses
@@ -241,7 +299,7 @@ export function DocumentVisualizer({
               Extracted Terms
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                              {analysis.keyTerms.map((term, index) => (
+                              {analysis && analysis.keyTerms.map((term, index) => (
                 <div
                   key={index}
                   className={`p-3 rounded-lg ${
@@ -275,16 +333,97 @@ export function DocumentVisualizer({
             </div>
           </div>
 
-          {/* Document Preview */}
+          {/* Document Content with Dynamic Highlighting */}
           <div className="mb-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-3">
-              Document Preview
-            </h3>
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <p className="text-gray-700 whitespace-pre-wrap">
-                {document.content?.substring(0, 500)}...
-              </p>
+            <div className="flex justify-between items-center mb-3">
+              <h3 className="text-lg font-semibold text-gray-900">
+                {dynamicAnalysis ? 'Enhanced Document Analysis' : 'Document Preview'}
+              </h3>
+              {document.content && (
+                <div className="flex space-x-2">
+                  <button
+                    onClick={() => setAnalysisMode('dynamic')}
+                    className={`px-3 py-1 text-sm rounded-lg transition-colors ${
+                      analysisMode === 'dynamic' 
+                        ? 'bg-blue-100 text-blue-800' 
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+                  >
+                    Smart Highlighting
+                  </button>
+                  <button
+                    onClick={() => setAnalysisMode('standard')}
+                    className={`px-3 py-1 text-sm rounded-lg transition-colors ${
+                      analysisMode === 'standard' 
+                        ? 'bg-blue-100 text-blue-800' 
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+                  >
+                    Standard
+                  </button>
+                </div>
+              )}
             </div>
+            <div className="bg-gray-50 p-4 rounded-lg max-h-96 overflow-y-auto document-content">
+              {dynamicAnalysis ? (
+                <div>
+                  <div
+                    className="text-gray-700"
+                    dangerouslySetInnerHTML={{ 
+                      __html: highlightingEngine.generateAnimationCSS() + dynamicAnalysis.structured_text
+                    }}
+                    style={{
+                      fontSize: '14px',
+                      lineHeight: '1.7',
+                      textAlign: 'justify'
+                    }}
+                  />
+                  <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg">
+                    <p className="text-sm text-green-800">
+                      <strong>✅ Full Document Analysis:</strong> Complete document highlighted with {dynamicAnalysis.highlights.length} intelligent highlights. 
+                      Scroll to explore all sections with interactive tooltips.
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <p className="text-gray-700 whitespace-pre-wrap">
+                  {document.content?.substring(0, 2000)}{document.content && document.content.length > 2000 ? '...' : ''}
+                </p>
+              )}
+            </div>
+            
+            {/* Dynamic Analysis Issues */}
+            {dynamicAnalysis && dynamicAnalysis.issues.length > 0 && (
+              <div className="mt-4">
+                <h4 className="font-medium text-gray-900 mb-2">Key Issues Detected</h4>
+                <div className="space-y-2">
+                  {dynamicAnalysis.issues.slice(0, 3).map((issue, index) => (
+                    <div
+                      key={index}
+                      className={`p-3 rounded-lg border-l-4 ${
+                        issue.severity === 'critical' 
+                          ? 'bg-red-50 border-red-400 text-red-800'
+                          : issue.severity === 'warning'
+                          ? 'bg-yellow-50 border-yellow-400 text-yellow-800'
+                          : 'bg-blue-50 border-blue-400 text-blue-800'
+                      }`}
+                    >
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <p className="font-medium text-sm">{issue.title}</p>
+                          <p className="text-sm mt-1">{issue.description}</p>
+                        </div>
+                        {issue.action_required && (
+                          <span className="text-xs bg-red-100 text-red-800 px-2 py-1 rounded-full">
+                            Action Required
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Metadata */}

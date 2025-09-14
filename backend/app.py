@@ -4,8 +4,7 @@ from fastapi.security import APIKeyHeader
 from pydantic import BaseModel
 import re
 from typing import List, Optional
-from ml.models.contract_analyzer import ContractAnalyzer
-from ml.config.model_config import ModelConfig
+# Old ML imports removed - now using Claude API via dynamic_analyzer.py
 import logging
 import time
 import os
@@ -54,9 +53,8 @@ app.add_middleware(
     allow_headers=["Content-Type", "Authorization", "X-API-Key"],
 )
 
-# Initialize ML model
-config = ModelConfig()
-analyzer = ContractAnalyzer(config)
+# Note: Old ML model initialization removed
+# Use dynamic_analyzer.py for new Claude-based analysis
 
 class ContractRequest(BaseModel):
     text: str
@@ -191,12 +189,24 @@ async def analyze_contract(
         # Log request (excluding sensitive data)
         logger.info(f"Received analysis request from {request.source_url or 'unknown source'}")
         
-        # Use the ML model for analysis
-        analysis_result = analyzer.analyze_contract(request.text)
+        # Fallback to pattern-based analysis (ML model removed)
+        analysis = analyze_red_flags(request.text)
+        word_count = len(request.text.split())
         
-        # Add metadata
-        analysis_result['analysis_timestamp'] = datetime.utcnow().isoformat()
-        analysis_result['model_version'] = config.model_name
+        # Determine risk level based on red flags
+        risk_level = 'low'
+        if any(flag['severity'] == 'high' for flag in analysis):
+            risk_level = 'high'
+        elif any(flag['severity'] == 'medium' for flag in analysis):
+            risk_level = 'medium'
+        
+        analysis_result = {
+            'risk_level': risk_level,
+            'word_count': word_count,
+            'red_flags': analysis,
+            'analysis_timestamp': datetime.utcnow().isoformat(),
+            'model_version': 'pattern-matching-v2'
+        }
         
         return analysis_result
         
