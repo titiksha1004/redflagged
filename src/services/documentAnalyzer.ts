@@ -57,11 +57,7 @@ async function callClaudeAPI(messages: any[]) {
     const userMessages = messages.filter(m => m.role !== 'system');
 
     const response = await anthropic.messages.create({
-<<<<<<< HEAD
-      model: 'claude-sonnet-4-20250514',
-=======
       model: 'claude-3-5-sonnet-20241022',
->>>>>>> ae3b221 (Refactor document analysis and remove legacy ML components)
       max_tokens: 1000,
       temperature: 0.1,
       system: systemMessage,
