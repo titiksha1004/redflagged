@@ -5,7 +5,8 @@ import { sendMessageToClaude } from '../lib/claude-main';
 import { toast } from 'sonner';
 import { Resizable } from 're-resizable';
 import markdownit from 'markdown-it';
-import { getUserDocuments, prepareDocumentContext } from '../services/documentRetrieval';
+import { searchDocuments } from '../services/ragService';
+import { useAuth } from '../contexts/AuthContext';
 
 interface Message {
   id: string;
@@ -19,6 +20,7 @@ const md = markdownit({
 });
 
 export default function LegalResearch() {
+  const { user, role } = useAuth();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
@@ -52,9 +54,20 @@ export default function LegalResearch() {
     setIsTyping(true);
     
     try {
-      // Get user documents for RAG context
-      const userDocuments = await getUserDocuments();
-      const documentContext = prepareDocumentContext(userDocuments);
+      console.log('🔐 User authentication state:', {
+        isAuthenticated: !!user,
+        userId: user?.id?.substring(0, 8) + '...' || 'none',
+        userRole: role,
+        hasEmail: !!user?.email,
+        authProvider: user?.app_metadata?.provider || 'fallback'
+      });
+
+      // Get document context using LangChain semantic search
+      const documentContext = await searchDocuments(input);
+      console.log('📄 Document context:', {
+        hasContext: !!documentContext,
+        contextLength: documentContext?.length || 0
+      });
 
       // Convert messages to Claude format (excluding timestamps and ids, system role)
       const conversationHistory = messages

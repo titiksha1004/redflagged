@@ -20,6 +20,13 @@ export async function sendMessageToClaude(
   conversationHistory: ClaudeMessage[] = [],
   options: { temperature?: number; maxTokens?: number; documentContext?: string } = {}
 ) {
+  console.log('🤖 Claude API call initiated');
+  console.log('Environment check:', {
+    hasApiKey: !!import.meta.env.VITE_ANTHROPIC_API_KEY,
+    keyLength: import.meta.env.VITE_ANTHROPIC_API_KEY?.length || 0,
+    keyPrefix: import.meta.env.VITE_ANTHROPIC_API_KEY?.substring(0, 10) || 'none'
+  });
+
   try {
     // Sanitize the input message by removing null bytes and invalid Unicode escapes
     const sanitizedMessage = message
@@ -53,6 +60,15 @@ export async function sendMessageToClaude(
       systemMessage += `\n\nYou have access to the user's uploaded legal documents below. Reference them when relevant to answer questions:\n\n${options.documentContext}`;
     }
 
+    console.log('📋 Request parameters:', {
+      model: "claude-sonnet-4-20250514",
+      max_tokens: options.maxTokens || 1024,
+      temperature: options.temperature || 0.7,
+      messageCount: messages.length,
+      hasDocumentContext: !!(options.documentContext && options.documentContext.trim().length > 0),
+      contextLength: options.documentContext?.length || 0
+    });
+
     const response = await anthropic.messages.create({
       model: "claude-sonnet-4-20250514",
       max_tokens: options.maxTokens || 1024,
@@ -60,6 +76,8 @@ export async function sendMessageToClaude(
       system: systemMessage,
       messages: messages,
     });
+
+    console.log('✅ Claude API call successful');
 
     return response.content[0]?.type === 'text' ? response.content[0].text : "";
   } catch (error) {

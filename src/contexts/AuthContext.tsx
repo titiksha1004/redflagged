@@ -66,6 +66,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [role, setRole] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [fetchingRole, setFetchingRole] = useState(false);
   
   // Use the shared check from supabase.ts
   const supabaseConfigured = isSupabaseConfigured;
@@ -231,45 +232,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         authListener.subscription.unsubscribe();
       }
     };
-  }, [supabaseConfigured, user]);
+  }, [supabaseConfigured]);
 
   const fetchUserRole = async (userId: string) => {
-    if (!supabaseConfigured) return;
-    
-    try {
-      console.log('Fetching user role for user ID:', userId);
-      // First, try to get the role from user_profiles table
-      const { data, error } = await supabase
-        .from('user_profiles')
-        .select('role')
-        .eq('user_id', userId)
-        .single();
-        
-      if (error) {
-        console.log('❌ Error fetching role from user_profiles:', error.message);
-        // If no profile found, try user metadata
-        console.log('Falling back to user metadata for role...');
-        const { data: userData, error: userError } = await supabase.auth.getUser();
-        
-        if (!userError && userData?.user?.user_metadata?.role) {
-          console.log('Found role in user metadata:', userData.user.user_metadata.role);
-          setRole(userData.user.user_metadata.role as string);
-          return;
-        }
-        
-        // If all else fails, set a default role
-        console.log('️ No role found, using default role: user');
-        setRole('user');
-        return;
-      }
-      
-      // Role found in user_profiles
-      console.log('Found role in user_profiles:', data.role || 'user');
-      setRole(data.role || 'user');
-    } catch (error) {
-      console.error("❌ Unexpected error fetching user role:", error);
-      setRole('user');
-    }
+    setRole('user');
   };
 
   const signUp = async (email: string, password: string) => {
@@ -483,7 +449,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `https://redflagged-hackmit.vercel.app/auth-callback`,
+          redirectTo: `http://localhost:5176/auth-callback`,
           queryParams: {
             access_type: 'offline',
             prompt: 'consent',
@@ -525,7 +491,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'github',
         options: {
-          redirectTo: `https://redflagged-hackmit.vercel.app/auth-callback`,
+          redirectTo: `http://localhost:5176/auth-callback`,
           queryParams: {
             scope: 'user:email'
           }
