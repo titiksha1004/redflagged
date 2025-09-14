@@ -5,6 +5,7 @@ import { sendMessageToClaude } from '../lib/claude-main';
 import { toast } from 'sonner';
 import { Resizable } from 're-resizable';
 import markdownit from 'markdown-it';
+import { getUserDocuments, prepareDocumentContext } from '../services/documentRetrieval';
 
 interface Message {
   id: string;
@@ -13,7 +14,9 @@ interface Message {
   timestamp: Date;
 }
 
-const md = markdownit();
+const md = markdownit({
+  breaks: true,
+});
 
 export default function LegalResearch() {
   const [messages, setMessages] = useState<Message[]>([
@@ -49,6 +52,10 @@ export default function LegalResearch() {
     setIsTyping(true);
     
     try {
+      // Get user documents for RAG context
+      const userDocuments = await getUserDocuments();
+      const documentContext = prepareDocumentContext(userDocuments);
+
       // Convert messages to Claude format (excluding timestamps and ids, system role)
       const conversationHistory = messages
         .filter(m => m.role !== 'system')
@@ -59,7 +66,8 @@ export default function LegalResearch() {
 
       const response = await sendMessageToClaude(input, conversationHistory, {
         temperature: 0.7,
-        maxTokens: 2048
+        maxTokens: 1024,
+        documentContext
       });
       
       const botMessage: Message = {

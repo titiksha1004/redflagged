@@ -18,7 +18,7 @@ const anthropic = new Anthropic({
 export async function sendMessageToClaude(
   message: string,
   conversationHistory: ClaudeMessage[] = [],
-  options: { temperature?: number; maxTokens?: number } = {}
+  options: { temperature?: number; maxTokens?: number; documentContext?: string } = {}
 ) {
   try {
     // Sanitize the input message by removing null bytes and invalid Unicode escapes
@@ -43,10 +43,15 @@ export async function sendMessageToClaude(
       },
     ];
 
-    const systemMessage = `You are an expert legal AI assistant powered by Claude (Anthropic's advanced language model).
+    let systemMessage = `You are an expert legal AI assistant powered by Claude (Anthropic's advanced language model).
                  Provide accurate, clear, and concise legal information and analysis.
                  Focus on helping users understand complex legal concepts and documents.
                  Always maintain professional tone and cite relevant legal precedents when applicable.`;
+
+    // Add document context if available
+    if (options.documentContext && options.documentContext.trim().length > 0) {
+      systemMessage += `\n\nYou have access to the user's uploaded legal documents below. Reference them when relevant to answer questions:\n\n${options.documentContext}`;
+    }
 
     const response = await anthropic.messages.create({
       model: "claude-sonnet-4-20250514",
