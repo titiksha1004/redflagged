@@ -57,7 +57,7 @@ async function callClaudeAPI(messages: any[]) {
     const userMessages = messages.filter(m => m.role !== 'system');
 
     const response = await anthropic.messages.create({
-      model: 'claude-4-20250101',
+      model: 'claude-sonnet-4-20250514',
       max_tokens: 1000,
       temperature: 0.1,
       system: systemMessage,
