@@ -178,7 +178,7 @@ export default function AuthPage() {
               />
               {isSignUp && (
                 <p className="mt-1 text-sm text-gray-500">
-                  Must be at least 8 characters long with at least one number and one uppercase letter
+                  Must be at least 8 characters long
                 </p>
               )}
             </div>

@@ -32,8 +32,8 @@ export default function ResetPassword() {
       return;
     }
 
-    if (password.length < 8 || !/[A-Z]/.test(password) || !/[0-9]/.test(password)) {
-      toast.error('Password must be at least 8 characters long and include a number and uppercase letter');
+    if (password.length < 8) {
+      toast.error('Password must be at least 8 characters long');
       return;
     }
 
