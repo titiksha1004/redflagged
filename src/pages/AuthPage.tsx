@@ -47,9 +47,8 @@ export default function AuthPage() {
     }
 
     // Password validation
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$/;
-    if (isSignUp && !passwordRegex.test(password)) {
-      setError('Password must be at least 12 characters with uppercase, lowercase, number, and special character (@$!%*?&)');
+    if (isSignUp && password.length < 8) {
+      setError('Password must be at least 8 characters long');
       return;
     }
 
