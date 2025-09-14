@@ -2,6 +2,7 @@ import { createWorker } from "tesseract.js";
 import * as pdfjsLib from "../lib/pdf-worker";
 import mammoth from "mammoth";
 import { supabase } from "../lib/supabase";
+import { processAndStoreDocument } from "./ragService";
 
 export interface ProcessedDocument {
   text: string;
@@ -108,9 +109,17 @@ export class DocumentProcessor {
         this.onProgress(80);
       }
 
-      // Store the processed document in Supabase
+      // Store the processed document in Supabase (existing storage)
       await this.storeProcessedDocument(file.name, text, metadata);
-      
+
+      // Update progress to 90%
+      if (this.onProgress) {
+        this.onProgress(90);
+      }
+
+      // Additionally process with LangChain for authenticated users
+      await processAndStoreDocument(file);
+
       // Complete progress at 100%
       if (this.onProgress) {
         this.onProgress(100);
@@ -372,9 +381,9 @@ export class DocumentProcessor {
     if (!this.tesseractWorker) {
       throw new Error("Tesseract worker not initialized");
     }
-    
+
     const result = await this.tesseractWorker.recognize(imageElement.src);
-    
+
     return {
       text: result.data.text,
       confidence: result.data.confidence
@@ -384,17 +393,17 @@ export class DocumentProcessor {
   private groupTextByLayout(textItems: any[]): any {
     // Group text items by vertical position (lines) and then by horizontal position
     const lines = new Map();
-    
+
     textItems.forEach((item: any) => {
       if (!item.str || !item.transform) return;
-      
+
       const y = Math.round(item.transform[5]); // Vertical position
       const x = item.transform[4]; // Horizontal position
-      
+
       if (!lines.has(y)) {
         lines.set(y, []);
       }
-      
+
       lines.get(y).push({
         text: item.str,
         x: x,
@@ -402,7 +411,7 @@ export class DocumentProcessor {
         height: item.height || 0
       });
     });
-    
+
     // Sort lines by vertical position (top to bottom)
     const sortedLines = Array.from(lines.entries())
       .sort(([y1], [y2]) => y2 - y1) // Higher y values are at the top
@@ -410,15 +419,15 @@ export class DocumentProcessor {
         y,
         items: items.sort((a: any, b: any) => a.x - b.x) // Sort by horizontal position
       }));
-    
+
     // Group lines into paragraphs based on spacing
     const paragraphs = [];
     let currentParagraph: any[] = [];
     let lastY = null;
-    
+
     for (const line of sortedLines) {
       const spacing = lastY ? Math.abs(lastY - line.y) : 0;
-      
+
       // If spacing is larger than typical line height, start new paragraph
       if (spacing > 20 && currentParagraph.length > 0) {
         paragraphs.push({
@@ -427,11 +436,11 @@ export class DocumentProcessor {
         });
         currentParagraph = [];
       }
-      
+
       currentParagraph.push(line);
       lastY = line.y;
     }
-    
+
     // Add final paragraph
     if (currentParagraph.length > 0) {
       paragraphs.push({
@@ -439,7 +448,7 @@ export class DocumentProcessor {
         text: currentParagraph.map(l => l.items.map((i: any) => i.text).join(' ')).join(' ')
       });
     }
-    
+
     return {
       paragraphs,
       totalLines: sortedLines.length,

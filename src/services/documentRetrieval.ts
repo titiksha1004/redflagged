@@ -1,4 +1,5 @@
 import { supabase } from '../lib/supabase';
+import { searchUserDocuments } from './vectorSearch';
 
 export interface UserDocument {
   id: string;
@@ -6,7 +7,7 @@ export interface UserDocument {
   file_name: string;
 }
 
-export async function getUserDocuments(): Promise<UserDocument[]> {
+export async function getUserDocuments(query?: string): Promise<UserDocument[]> {
   try {
     const { data: { user } } = await supabase.auth.getUser();
 
@@ -20,7 +21,17 @@ export async function getUserDocuments(): Promise<UserDocument[]> {
       }));
     }
 
-    // Get documents from Supabase for authenticated users
+    // For authenticated users: use vector search if query provided
+    if (query) {
+      const searchResults = await searchUserDocuments(query);
+      return searchResults.map(result => ({
+        id: `chunk-${Date.now()}`,
+        content: result.chunk_content,
+        file_name: result.file_name
+      }));
+    }
+
+    // Fallback: get full documents from Supabase
     const { data, error } = await supabase
       .from('processed_documents')
       .select('id, content, file_name')
