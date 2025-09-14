@@ -199,7 +199,7 @@ async function analyzePage() {
       console.log('Sending request to API...');
       
       // Get API URL from config
-      const apiUrl = window.redflaggedConfig?.getApiUrl() || 'https://api.redflagged.vercel.app';
+      const apiUrl = window.redflaggedConfig?.getApiUrl() || 'https://api.redflagged-hackmit.vercel.app';
       const fullUrl = `${apiUrl}/api/analyze`;
       
       // Validate URL security

@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentAnalysis = null;
 
   // Config
-  const API_ENDPOINT = window.redflaggedConfig?.getApiUrl() || 'https://api.redflagged.vercel.app';
+  const API_ENDPOINT = window.redflaggedConfig?.getApiUrl() || 'https://api.redflagged-hackmit.vercel.app';
   const GROQ_API_URL = window.redflaggedConfig?.CONFIG?.GROQ_API_URL || 'https://api.groq.com/openai/v1/chat/completions';
 
   // Validate API endpoint security
@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (websiteLinkButton) {
     websiteLinkButton.addEventListener('click', () => {
         // Replace with your actual website URL
-        chrome.tabs.create({ url: 'https://redflagged.vercel.app/' }); 
+        chrome.tabs.create({ url: 'https://redflagged-hackmit.vercel.app/' }); 
     });
   }
 
