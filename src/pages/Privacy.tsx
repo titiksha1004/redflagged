@@ -174,7 +174,7 @@ export default function Privacy() {
               href="mailto:thabheloduve@gmail.com"
               className="text-indigo-600 hover:text-indigo-500"
             >
-              privacy@redflagged.vercel.app | thabheloduve@gmail.com
+              privacy@redflagged-hackmit.vercel.app | thabheloduve@gmail.com
             </a>
           </div>
         </motion.div>

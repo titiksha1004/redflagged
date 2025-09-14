@@ -1,11 +1,11 @@
 // Extension config
 const CONFIG = {
   // API Endpoints - Using same Vercel deployment for frontend/backend
-  API_BASE_URL: 'https://redflagged.vercel.app', // Your Vercel deployment handles both frontend and API
+  API_BASE_URL: 'https://redflagged-hackmit.vercel.app', // Your Vercel deployment handles both frontend and API
   API_FALLBACK_URL: 'http://localhost:8000', // Development fallback (only for local dev)
   
   // Frontend URLs
-  FRONTEND_URL: 'https://redflagged.vercel.app',
+  FRONTEND_URL: 'https://redflagged-hackmit.vercel.app',
   
   // Groq AI setup
   GROQ_API_URL: 'https://api.groq.com/openai/v1/chat/completions',
@@ -28,7 +28,7 @@ const CONFIG = {
     'nolo.com',
     'findlaw.com',
     'justia.com',
-    'redflagged.vercel.app'  // Allow analysis of our own site
+    'redflagged-hackmit.vercel.app'  // Allow analysis of our own site
   ]
 };
 

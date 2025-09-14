@@ -475,11 +475,39 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/auth-callback`
+          redirectTo: `https://redflagged-hackmit.vercel.app/auth-callback`,
+          queryParams: {
+            access_type: 'offline',
+            prompt: 'consent',
+          }
         }
       });
-      if (error) throw error;
+      
+      if (error) {
+        console.error('Google OAuth error:', error);
+        
+        // Check for specific OAuth configuration errors
+        if (error.message?.includes('Provider not found') || 
+            error.message?.includes('not configured') ||
+            error.message?.includes('404') ||
+            error.message?.includes('can\'t reach this page')) {
+          toast.error("Google OAuth is not configured in Supabase. Please contact support or use email/password sign-in.");
+          return;
+        }
+        
+        throw error;
+      }
     } catch (error: any) {
+      console.error('Google OAuth error:', error);
+      
+      // Handle network errors or configuration issues
+      if (error.message?.includes('Failed to fetch') || 
+          error.message?.includes('can\'t reach this page') ||
+          error.message?.includes('ERR_NAME_NOT_RESOLVED')) {
+        toast.error("Google OAuth is not configured. Please use email/password sign-in or contact support.");
+        return;
+      }
+      
       toast.error(`Google sign in failed: ${error.message}`);
       throw error;
     }
@@ -495,11 +523,38 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'github',
         options: {
-          redirectTo: `${window.location.origin}/auth-callback`
+          redirectTo: `https://redflagged-hackmit.vercel.app/auth-callback`,
+          queryParams: {
+            scope: 'user:email'
+          }
         }
       });
-      if (error) throw error;
+      
+      if (error) {
+        console.error('GitHub OAuth error:', error);
+        
+        // Check for specific OAuth configuration errors
+        if (error.message?.includes('Provider not found') || 
+            error.message?.includes('not configured') ||
+            error.message?.includes('404') ||
+            error.message?.includes('can\'t reach this page')) {
+          toast.error("GitHub OAuth is not configured in Supabase. Please contact support or use email/password sign-in.");
+          return;
+        }
+        
+        throw error;
+      }
     } catch (error: any) {
+      console.error('GitHub OAuth error:', error);
+      
+      // Handle network errors or configuration issues
+      if (error.message?.includes('Failed to fetch') || 
+          error.message?.includes('can\'t reach this page') ||
+          error.message?.includes('ERR_NAME_NOT_RESOLVED')) {
+        toast.error("GitHub OAuth is not configured. Please use email/password sign-in or contact support.");
+        return;
+      }
+      
       toast.error(`GitHub sign in failed: ${error.message}`);
       throw error;
     }

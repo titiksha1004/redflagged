@@ -2,7 +2,7 @@
 importScripts('config.js');
 
 // Service worker config
-const API_BASE_URL = 'https://api.redflagged.vercel.app';
+const API_BASE_URL = 'https://api.redflagged-hackmit.vercel.app';
 const API_FALLBACK_URL = 'http://localhost:8000'; // Only for development
 const ALLOW_HTTP_LOCALHOST = false; // Set to true only for local development
 

@@ -41,9 +41,9 @@ ALLOWED_ORIGINS = [
     "chrome-extension://*",  # Chrome extensions
     "http://localhost:3000",    # Local development
     "http://localhost:5173",    # Vite dev server
-    "https://redflagged.vercel.app",  # Vercel production deployment
-    "https://redflagged.vercel.app",  # Custom domain (if configured)
-    "https://www.redflagged.vercel.app"  # Custom domain with www
+    "https://redflagged-hackmit.vercel.app",  # Vercel production deployment
+    "https://redflagged-hackmit.vercel.app",  # Custom domain (if configured)
+    "https://www.redflagged-hackmit.vercel.app"  # Custom domain with www
 ]
 
 app.add_middleware(
