@@ -3,8 +3,8 @@ import * as pdfjsLib from "pdfjs-dist";
 // More resilient worker initialization with direct CDN fallback
 if (typeof window !== "undefined") {
   try {
-    // Set the CDN fallback first so we always have something working
-    const cdnFallback = `https://unpkg.com/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.js`;
+    // Set the CDN fallback first so we always have something working (using CORS-friendly CDN)
+    const cdnFallback = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
     pdfjsLib.GlobalWorkerOptions.workerSrc = cdnFallback;
 
     // Check if the worker file exists in our public directory
@@ -28,9 +28,9 @@ if (typeof window !== "undefined") {
         `/js/pdf.worker.min.mjs`,
         // Then relative path for development
         './js/pdf.worker.min.mjs',
-        // Primary CDN fallback
+        // Primary CDN fallback (CORS-friendly)
         cdnFallback,
-        // Secondary CDN fallback
+        // Secondary CDN fallback (CORS-friendly)
         `https://cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.js`
       ];
       

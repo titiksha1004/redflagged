@@ -16,6 +16,7 @@ export interface ProcessedDocument {
       language: string;
     };
   };
+  structuredText?: any; // Layout-preserved structure
 }
 
 export class DocumentProcessor {
@@ -49,6 +50,7 @@ export class DocumentProcessor {
   public async processDocument(file: File): Promise<ProcessedDocument> {
     const fileType = file.type.toLowerCase();
     let text = "";
+    let structuredText: any = null;
     let metadata: ProcessedDocument["metadata"] = {
       title: file.name,
       type: fileType.includes("pdf")
@@ -75,6 +77,7 @@ export class DocumentProcessor {
         const result = await this.processPDF(file);
         text = result.text;
         metadata.pageCount = result.pageCount;
+        structuredText = result.structuredText;
         
         // Update progress to 70%
         if (this.onProgress) {
@@ -113,7 +116,7 @@ export class DocumentProcessor {
         this.onProgress(100);
       }
 
-      return { text, metadata };
+      return { text, metadata, structuredText };
     } catch (error) {
       console.error("Error processing document:", error);
       // Reset progress on error
@@ -124,7 +127,7 @@ export class DocumentProcessor {
     }
   }
 
-  private async processPDF(file: File): Promise<{ text: string; pageCount: number }> {
+  private async processPDF(file: File): Promise<{ text: string; pageCount: number; structuredText?: any }> {
     try {
       console.log("Starting PDF processing");
       const arrayBuffer = await file.arrayBuffer();
@@ -159,12 +162,21 @@ export class DocumentProcessor {
         
         console.log(`PDF loaded with ${pdf.numPages} pages`);
         let fullText = "";
+        const structuredPages: any[] = [];
         
         // Process each page with enhanced error handling
         for (let i = 1; i <= pdf.numPages; i++) {
           try {
             const page = await pdf.getPage(i);
             const textContent = await page.getTextContent();
+            
+            // Group text by layout for structure preservation
+            const structuredText = this.groupTextByLayout(textContent.items);
+            structuredPages.push({
+              pageNumber: i,
+              ...structuredText
+            });
+            
             const pageText = textContent.items.map((item: any) => item.str).join(" ");
             fullText += pageText + " ";
           } catch (pageError) {
@@ -214,6 +226,11 @@ export class DocumentProcessor {
         return {
           text: fullText,
           pageCount: pdf.numPages,
+          structuredText: {
+            pages: structuredPages,
+            totalPages: pdf.numPages,
+            extractionMethod: 'pdfjs'
+          }
         };
       } catch (pdfError) {
         console.error("PDF processing error:", pdfError);
@@ -361,6 +378,72 @@ export class DocumentProcessor {
     return {
       text: result.data.text,
       confidence: result.data.confidence
+    };
+  }
+
+  private groupTextByLayout(textItems: any[]): any {
+    // Group text items by vertical position (lines) and then by horizontal position
+    const lines = new Map();
+    
+    textItems.forEach((item: any) => {
+      if (!item.str || !item.transform) return;
+      
+      const y = Math.round(item.transform[5]); // Vertical position
+      const x = item.transform[4]; // Horizontal position
+      
+      if (!lines.has(y)) {
+        lines.set(y, []);
+      }
+      
+      lines.get(y).push({
+        text: item.str,
+        x: x,
+        width: item.width || 0,
+        height: item.height || 0
+      });
+    });
+    
+    // Sort lines by vertical position (top to bottom)
+    const sortedLines = Array.from(lines.entries())
+      .sort(([y1], [y2]) => y2 - y1) // Higher y values are at the top
+      .map(([y, items]) => ({
+        y,
+        items: items.sort((a: any, b: any) => a.x - b.x) // Sort by horizontal position
+      }));
+    
+    // Group lines into paragraphs based on spacing
+    const paragraphs = [];
+    let currentParagraph: any[] = [];
+    let lastY = null;
+    
+    for (const line of sortedLines) {
+      const spacing = lastY ? Math.abs(lastY - line.y) : 0;
+      
+      // If spacing is larger than typical line height, start new paragraph
+      if (spacing > 20 && currentParagraph.length > 0) {
+        paragraphs.push({
+          lines: currentParagraph,
+          text: currentParagraph.map(l => l.items.map((i: any) => i.text).join(' ')).join(' ')
+        });
+        currentParagraph = [];
+      }
+      
+      currentParagraph.push(line);
+      lastY = line.y;
+    }
+    
+    // Add final paragraph
+    if (currentParagraph.length > 0) {
+      paragraphs.push({
+        lines: currentParagraph,
+        text: currentParagraph.map(l => l.items.map((i: any) => i.text).join(' ')).join(' ')
+      });
+    }
+    
+    return {
+      paragraphs,
+      totalLines: sortedLines.length,
+      structure: 'preserved'
     };
   }
 }
