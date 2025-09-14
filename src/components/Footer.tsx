@@ -9,8 +9,10 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-4">
           <div className="space-y-6 sm:space-y-8">
             <div className="flex items-center">
-              <Shield className="h-7 w-7 sm:h-8 sm:w-8 text-indigo-400" />
-              <span className="ml-2 text-lg sm:text-xl font-bold">REDFLAGGED</span>
+              <Shield className="h-10 w-10 sm:h-12 sm:w-12 text-indigo-400" />
+              <span className="ml-3 text-2xl sm:text-3xl font-bold">
+                <span className="text-white">RED</span><span className="text-white">FLAGGED</span>
+              </span>
             </div>
             <div>
               <p className="text-gray-400 text-sm sm:text-base">

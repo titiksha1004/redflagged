@@ -165,6 +165,7 @@ export default function DocumentLibrary() {
     }
   };
 
+
   const handleDocumentProcessed = async (processedDoc: ProcessedDocument) => {
     // Refresh the document list
     await loadDocuments();
@@ -385,6 +386,7 @@ export default function DocumentLibrary() {
             </motion.div>
           ))}
         </div>
+
 
         {selectedDocument && (
           <DocumentVisualizer
