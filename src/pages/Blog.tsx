@@ -7,7 +7,7 @@ const posts = [
     id: 1,
     title: 'Understanding Contract Analysis AI',
     excerpt: 'How artificial intelligence is revolutionizing the way we read and understand legal documents.',
-    author: 'Thabhelo Duve',
+    author: 'REDFLAGGED Team',
     date: '2024-03-13',
     category: 'Technology'
   },
@@ -23,7 +23,7 @@ const posts = [
     id: 3,
     title: 'The Future of Legal Tech',
     excerpt: 'Exploring upcoming trends in legal technology and their impact on consumer protection.',
-    author: 'Thabhelo Duve',
+    author: 'REDFLAGGED Team',
     date: '2024-03-11',
     category: 'Industry'
   }

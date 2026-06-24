@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { Mail, Send } from "lucide-react";
 import emailjs from "@emailjs/browser";
 import { toast } from "sonner";
 
@@ -38,9 +38,9 @@ export default function Contact() {
         "template_8y2z9dp",
         {
           from_name: form.name,
-          to_name: "Thabhelo",
+          to_name: "REDFLAGGED Support",
           from_email: form.email,
-          to_email: "thabhelo.duve+portfolio@talladega.edu",
+          to_email: "support@redflagged-hackmit.vercel.app",
           message: form.message,
         },
         "_JDd2_-oFPAXuoAI5"
@@ -87,23 +87,13 @@ export default function Contact() {
             <div className="space-y-6">
               <div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                  Thabhelo Duve
+                  Support
                 </h3>
                 <div className="space-y-3">
                   <div className="flex items-center">
                     <Mail className="h-6 w-6 text-indigo-600 mr-3" />
                     <span className="text-gray-600">
-                      thabheloduve@gmail.com
-                    </span>
-                  </div>
-                  <div className="flex items-center">
-                    <Phone className="h-6 w-6 text-indigo-600 mr-3" />
-                    <span className="text-gray-600">+1 (256) 375-4207</span>
-                  </div>
-                  <div className="flex items-center">
-                    <MapPin className="h-6 w-6 text-indigo-600 mr-3" />
-                    <span className="text-gray-600">
-                      627 Battle Street West, Talladega, AL 35160
+                      support@redflagged-hackmit.vercel.app
                     </span>
                   </div>
                 </div>
@@ -111,27 +101,13 @@ export default function Contact() {
 
               <div className="border-t pt-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                  Titiksha Golla
+                  Privacy
                 </h3>
                 <div className="space-y-3">
                   <div className="flex items-center">
                     <Mail className="h-6 w-6 text-indigo-600 mr-3" />
                     <span className="text-gray-600">
-                      titiksha.golla@gmail.com
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="border-t pt-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                  Zheng Chen
-                </h3>
-                <div className="space-y-3">
-                  <div className="flex items-center">
-                    <Mail className="h-6 w-6 text-indigo-600 mr-3" />
-                    <span className="text-gray-600">
-                      zhenghchen2024@gmail.com
+                      privacy@redflagged-hackmit.vercel.app
                     </span>
                   </div>
                 </div>

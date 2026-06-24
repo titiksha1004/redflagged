@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Shield, Twitter, Facebook, Instagram, Linkedin, Mail, Phone } from 'lucide-react';
+import { Shield, Mail } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -18,40 +18,6 @@ export default function Footer() {
               <p className="text-gray-400 text-sm sm:text-base">
                 Protecting your rights with AI-powered contract analysis.
               </p>
-            </div>
-            <div className="flex space-x-4 sm:space-x-6">
-              <a 
-                href="https://x.com/thabhelo_tabs" 
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-400 hover:text-indigo-400 transition-colors"
-              >
-                <Twitter className="h-5 w-5 sm:h-6 sm:w-6" />
-              </a>
-              <a 
-                href="https://facebook.com/thabhelo.duve" 
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-400 hover:text-indigo-400 transition-colors"
-              >
-                <Facebook className="h-5 w-5 sm:h-6 sm:w-6" />
-              </a>
-              <a 
-                href="https://instagram.com/thabhelo_tabs" 
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-400 hover:text-indigo-400 transition-colors"
-              >
-                <Instagram className="h-5 w-5 sm:h-6 sm:w-6" />
-              </a>
-              <a 
-                href="https://linkedin.com/in/thabhelo" 
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-400 hover:text-indigo-400 transition-colors"
-              >
-                <Linkedin className="h-5 w-5 sm:h-6 sm:w-6" />
-              </a>
             </div>
           </div>
           
@@ -107,42 +73,24 @@ export default function Footer() {
             <h3 className="text-sm font-semibold text-gray-400 tracking-wider uppercase mb-4">Contact</h3>
             <div className="space-y-4">
               <div>
-                <h4 className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">Thabhelo Duve</h4>
+                <h4 className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">Support</h4>
                 <ul className="space-y-2">
                   <li>
-                    <a href="mailto:thabheloduve@gmail.com" className="text-gray-300 hover:text-indigo-400 transition-colors flex items-center text-sm">
+                    <a href="mailto:support@redflagged-hackmit.vercel.app" className="text-gray-300 hover:text-indigo-400 transition-colors flex items-center text-sm">
                       <Mail className="h-4 w-4 mr-2" />
-                      <span className="break-all">thabheloduve@gmail.com</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="tel:2563754207" className="text-gray-300 hover:text-indigo-400 transition-colors flex items-center text-sm">
-                      <Phone className="h-4 w-4 mr-2" />
-                      +1 (256) 375-4207
+                      <span className="break-all">support@redflagged-hackmit.vercel.app</span>
                     </a>
                   </li>
                 </ul>
               </div>
               
               <div className="border-t border-gray-800 pt-4">
-                <h4 className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">Titiksha Golla</h4>
+                <h4 className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">Privacy</h4>
                 <ul className="space-y-2">
                   <li>
-                    <a href="mailto:titiksha.golla@gmail.com" className="text-gray-300 hover:text-indigo-400 transition-colors flex items-center text-sm">
+                    <a href="mailto:privacy@redflagged-hackmit.vercel.app" className="text-gray-300 hover:text-indigo-400 transition-colors flex items-center text-sm">
                       <Mail className="h-4 w-4 mr-2" />
-                      <span className="break-all">titiksha.golla@gmail.com</span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              
-              <div className="border-t border-gray-800 pt-4">
-                <h4 className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">Zheng Chen</h4>
-                <ul className="space-y-2">
-                  <li>
-                    <a href="mailto:zhenghchen2024@gmail.com" className="text-gray-300 hover:text-indigo-400 transition-colors flex items-center text-sm">
-                      <Mail className="h-4 w-4 mr-2" />
-                      <span className="break-all">zhenghchen2024@gmail.com</span>
+                      <span className="break-all">privacy@redflagged-hackmit.vercel.app</span>
                     </a>
                   </li>
                 </ul>
