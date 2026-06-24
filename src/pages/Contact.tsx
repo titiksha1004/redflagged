@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { Mail, Send } from "lucide-react";
 import emailjs from "@emailjs/browser";
 import { toast } from "sonner";
 
@@ -38,7 +38,7 @@ export default function Contact() {
         "template_8y2z9dp",
         {
           from_name: form.name,
-          to_name: "REDFLAGGED",
+          to_name: "REDFLAGGED Support",
           from_email: form.email,
           to_email: "support@redflagged-hackmit.vercel.app",
           message: form.message,
@@ -87,7 +87,7 @@ export default function Contact() {
             <div className="space-y-6">
               <div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                  REDFLAGGED Maintainer
+                  Support
                 </h3>
                 <div className="space-y-3">
                   <div className="flex items-center">
@@ -96,42 +96,18 @@ export default function Contact() {
                       support@redflagged-hackmit.vercel.app
                     </span>
                   </div>
-                  <div className="flex items-center">
-                    <Phone className="h-6 w-6 text-indigo-600 mr-3" />
-                    <span className="text-gray-600">support@redflagged-hackmit.vercel.app</span>
-                  </div>
-                  <div className="flex items-center">
-                    <MapPin className="h-6 w-6 text-indigo-600 mr-3" />
-                    <span className="text-gray-600">
-                      REDFLAGGED Support
-                    </span>
-                  </div>
                 </div>
               </div>
 
               <div className="border-t pt-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                  REDFLAGGED Maintainer
+                  Privacy
                 </h3>
                 <div className="space-y-3">
                   <div className="flex items-center">
                     <Mail className="h-6 w-6 text-indigo-600 mr-3" />
                     <span className="text-gray-600">
                       privacy@redflagged-hackmit.vercel.app
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="border-t pt-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                  REDFLAGGED Maintainer
-                </h3>
-                <div className="space-y-3">
-                  <div className="flex items-center">
-                    <Mail className="h-6 w-6 text-indigo-600 mr-3" />
-                    <span className="text-gray-600">
-                      support@redflagged-hackmit.vercel.app
                     </span>
                   </div>
                 </div>

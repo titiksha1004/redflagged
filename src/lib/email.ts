@@ -23,7 +23,7 @@ export async function sendContactEmail(data: ContactEmailProps) {
       'template_8y2z9dp',
       {
         from_name: data.name,
-        to_name: "REDFLAGGED",
+        to_name: "REDFLAGGED Support",
         from_email: data.email,
         to_email: "support@redflagged-hackmit.vercel.app",
         message: data.message,

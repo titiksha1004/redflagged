@@ -171,10 +171,10 @@ export default function Privacy() {
             <p className="font-medium text-gray-900">Privacy Team</p>
             <p className="text-gray-600">REDFLAGGED, Inc.</p>
             <a
-              href="mailto:support@redflagged-hackmit.vercel.app"
+              href="mailto:privacy@redflagged-hackmit.vercel.app"
               className="text-indigo-600 hover:text-indigo-500"
             >
-              privacy@redflagged-hackmit.vercel.app | support@redflagged-hackmit.vercel.app
+              privacy@redflagged-hackmit.vercel.app
             </a>
           </div>
         </motion.div>
